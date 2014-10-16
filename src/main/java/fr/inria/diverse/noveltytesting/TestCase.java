@@ -124,13 +124,6 @@ public class TestCase {
         return false;
     }
 
-    //mutate the inputs
-    public void testCaseMutation(){
-        Object[] mutatedData;
-        RandomData R = new RandomData();
-        mutatedData=R.getMutationDataGenerated(m, data);
-    }
-
     public boolean isInteger(String chaine) {
         try {
             Integer.parseInt(chaine);

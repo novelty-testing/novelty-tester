@@ -5,10 +5,9 @@
     <groupId>fr.inria.diverse.noveltytesting</groupId>
     <artifactId>novelty-tester</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
     <name>novelty-tester</name>
-    <url>https://github.com/novelty-testing</url>
+    <url>https://github.com/novelty-testing/novelty-tester</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
