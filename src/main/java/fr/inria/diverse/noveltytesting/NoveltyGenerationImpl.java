@@ -10,6 +10,7 @@ import fr.inria.diverse.noveltytesting.runner.RunnerImpl;
 import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
 import fr.inria.diverse.noveltytesting.visitor.StdoutModelVisitor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -50,7 +51,8 @@ public class NoveltyGenerationImpl implements NoveltyGeneration {
     }
 
     @Override
-    public void executeMethods(Interface anInterface) {
+    public void executeMethods(Interface anInterface)
+            throws InstantiationException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         try {
             Class<?> clazz = Class.forName(anInterface.getName());
             Object instance = clazz.newInstance();
@@ -68,7 +70,7 @@ public class NoveltyGenerationImpl implements NoveltyGeneration {
                     throw new NoSuchMethodException(binMethod.getName() + "with " + paramTypes.toString());
                 }
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
