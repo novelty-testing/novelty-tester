@@ -22,6 +22,10 @@ public class Interface implements Visitable {
         return methods;
     }
 
+    public void setMethods(List<Method> methods) {
+        this.methods = methods;
+    }
+
     public Method getMethod(String name, List<String> paramTypes) {
         for (Method m : this.methods) {
             if (m.getName().equals(name) && m.getParameterTypes().equals(paramTypes)) {

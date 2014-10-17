@@ -88,6 +88,22 @@ public class Method implements Visitable {
         this.memoryConsumptions.add(memoryConsumption);
     }
 
+    public void setCpuConsumptions(List<Double> cpuConsumptions) {
+        this.cpuConsumptions = cpuConsumptions;
+    }
+
+    public void setMemoryConsumptions(List<Integer> memoryConsumptions) {
+        this.memoryConsumptions = memoryConsumptions;
+    }
+
+    public Map<String, Parameter> getParamsMap() {
+        return paramsMap;
+    }
+
+    public void setParamsMap(Map<String, Parameter> paramsMap) {
+        this.paramsMap = paramsMap;
+    }
+
     public List<String> getParameterTypes() {
         List<String> paramTypes = new LinkedList<>();
         paramsMap.values().forEach(p -> {
