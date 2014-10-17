@@ -1,22 +1,35 @@
 package fr.inria.diverse.noveltytesting.model;
 
-import java.util.ArrayList;
+import fr.inria.diverse.noveltytesting.visitor.Visitable;
+import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
+
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by leiko on 16/10/14.
  */
-public class Interface {
+public class Interface implements Visitable {
 
     private String name;
     private List<Method> methods;
 
     public Interface() {
-        this.methods = new ArrayList<Method>();
+        this.methods = new LinkedList<Method>();
     }
 
     public List<Method> getMethods() {
         return methods;
+    }
+
+    public Method getMethod(String name, List<String> paramTypes) {
+        for (Method m : this.methods) {
+            if (m.getName().equals(name) && m.getParameterTypes().equals(paramTypes)) {
+                return m;
+            }
+        }
+
+        return null;
     }
 
     public void addMethod(Method m) {
@@ -42,5 +55,10 @@ public class Interface {
             str.append("\n");
         }
         return str.toString();
+    }
+
+    @Override
+    public void accept(ModelVisitor visitor) {
+        visitor.visit(this);
     }
 }

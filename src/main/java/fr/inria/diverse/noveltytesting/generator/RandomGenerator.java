@@ -50,6 +50,11 @@ public class RandomGenerator extends AbstractGenerator {
     }
 
     @Override
+    protected boolean genBoolean() {
+        return new Random().nextBoolean();
+    }
+
+    @Override
     protected String genString() {
         int strLength = new Random().nextInt(100) + 1; // this is really arbitrary
         StringBuilder str = new StringBuilder();

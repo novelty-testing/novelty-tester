@@ -1,9 +1,12 @@
 package fr.inria.diverse.noveltytesting.model;
 
+import fr.inria.diverse.noveltytesting.visitor.Visitable;
+import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
+
 /**
  * Created by leiko on 16/10/14.
  */
-public class Parameter {
+public class Parameter implements Visitable {
 
     private String name;
     private String type;
@@ -36,5 +39,10 @@ public class Parameter {
     @Override
     public String toString() {
         return getType() + ": " + this.name + " (" + this.getValue() + ")";
+    }
+
+    @Override
+    public void accept(ModelVisitor visitor) {
+        visitor.visit(this);
     }
 }

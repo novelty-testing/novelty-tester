@@ -1,14 +1,14 @@
 package fr.inria.diverse.noveltytesting.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import fr.inria.diverse.noveltytesting.visitor.Visitable;
+import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
+
+import java.util.*;
 
 /**
  * Created by leiko on 16/10/14.
  */
-public class Method {
+public class Method implements Visitable {
 
     private String name;
     private String returnValType;
@@ -21,9 +21,9 @@ public class Method {
     private Map<String, Parameter> paramsMap;
 
     public Method() {
-        this.paramsMap = new HashMap<String, Parameter>();
-        this.cpuConsumptions = new ArrayList<Double>();
-        this.memoryConsumptions = new ArrayList<Integer>();
+        this.paramsMap = new LinkedHashMap<>();
+        this.cpuConsumptions = new LinkedList<>();
+        this.memoryConsumptions = new LinkedList<>();
     }
 
     public String getName() {
@@ -35,7 +35,7 @@ public class Method {
     }
 
     public List<Parameter> getParameters() {
-        return new ArrayList<Parameter>(paramsMap.values());
+        return new LinkedList<>(paramsMap.values());
     }
 
     public void addParameter(Parameter p) {
@@ -88,23 +88,43 @@ public class Method {
         this.memoryConsumptions.add(memoryConsumption);
     }
 
+    public List<String> getParameterTypes() {
+        List<String> paramTypes = new LinkedList<>();
+        paramsMap.values().forEach(p -> {
+            paramTypes.add(p.getType());
+        });
+        return paramTypes;
+    }
+
+    public Object[] getParametersValue() {
+        Object[] paramValues = new Object[paramsMap.size()];
+        Parameter[] params = new Parameter[paramsMap.size()];
+        paramsMap.values().toArray(params);
+        for (int i=0; i < params.length; i++) {
+            paramValues[i] = params[i].getValue();
+        }
+        return paramValues;
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
         str.append(this.name);
-        str.append("(");
-        List<Parameter> params = this.getParameters();
-        for (int i=0; i < params.size(); i++) {
-            str.append(params.get(i).toString());
-            if (i+1 < params.size()) {
-                str.append(", ");
-            }
-        }
-        str.append(")");
         if (this.returnVal != null) {
             str.append(": ");
             str.append(this.getReturnValType());
         }
+        str.append("\n");
+        this.getParameters().forEach(p -> {
+            str.append("\t\t");
+            str.append(p.toString());
+            str.append("\n");
+        });
         return str.toString();
+    }
+
+    @Override
+    public void accept(ModelVisitor visitor) {
+        visitor.visit(this);
     }
 }

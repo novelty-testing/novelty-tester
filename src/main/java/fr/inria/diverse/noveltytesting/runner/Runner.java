@@ -1,6 +1,6 @@
 package fr.inria.diverse.noveltytesting.runner;
 
-import fr.inria.diverse.noveltytesting.model.Interface;
+import fr.inria.diverse.noveltytesting.model.Method;
 
 /**
  * Created by leiko on 16/10/14.
@@ -8,9 +8,11 @@ import fr.inria.diverse.noveltytesting.model.Interface;
 public interface Runner {
 
     /**
-     * Supposed to execute the different interface given in the Interface model
-     * and modify its state accordingly
-     * @param anInterface Interface model
+     * Executes given binMethod using instance as base instance object and the data
+     * contained in modelMethod parameters for parameter values
+     * @param instance
+     * @param binMethod
+     * @param modelMethod
      */
-    void exec(Interface anInterface);
+    void exec(Object instance, java.lang.reflect.Method binMethod, Method modelMethod);
 }
