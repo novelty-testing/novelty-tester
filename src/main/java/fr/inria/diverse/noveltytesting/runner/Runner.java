@@ -1,6 +1,6 @@
 package fr.inria.diverse.noveltytesting.runner;
 
-import fr.inria.diverse.noveltytesting.model.Method;
+import fr.inria.diverse.noveltytesting.model.Interface;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -10,12 +10,14 @@ import java.lang.reflect.InvocationTargetException;
 public interface Runner {
 
     /**
-     * Executes given binMethod using instance as base instance object and the data
-     * contained in modelMethod parameters for parameter values
-     * @param instance
-     * @param binMethod
-     * @param modelMethod
-     * @throws java.lang.reflect.InvocationTargetException
+     * Executes the different methods of the given model
+     * @param clazz
+     * @param anInterface
+     * @throws InstantiationException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
      */
-    void exec(Object instance, java.lang.reflect.Method binMethod, Method modelMethod) throws InvocationTargetException;
+    void exec(Class<?> clazz, Interface anInterface)
+            throws InstantiationException, NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 }

@@ -55,21 +55,7 @@ public class NoveltyGenerationImpl implements NoveltyGeneration {
             throws InstantiationException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         try {
             Class<?> clazz = Class.forName(anInterface.getName());
-            Object instance = clazz.newInstance();
-
-            for (java.lang.reflect.Method binMethod : clazz.getDeclaredMethods()) {
-                List<String> paramTypes = new LinkedList<>();
-                for (Class<?> c : binMethod.getParameterTypes()) {
-                    paramTypes.add(c.getName());
-                }
-                Method method = anInterface.getMethod(binMethod.getName(), paramTypes);
-                if (method != null) {
-                    runner.exec(instance, binMethod, method);
-                } else {
-                    // TODO method not found in model (this is not normal)
-                    throw new NoSuchMethodException(binMethod.getName() + "with " + paramTypes.toString());
-                }
-            }
+            runner.exec(clazz, anInterface);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
