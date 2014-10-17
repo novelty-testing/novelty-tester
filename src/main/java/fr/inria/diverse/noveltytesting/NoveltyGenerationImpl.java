@@ -7,13 +7,14 @@ import fr.inria.diverse.noveltytesting.model.Method;
 import fr.inria.diverse.noveltytesting.model.Parameter;
 import fr.inria.diverse.noveltytesting.runner.Runner;
 import fr.inria.diverse.noveltytesting.runner.RunnerImpl;
-import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
-import fr.inria.diverse.noveltytesting.visitor.StdoutModelVisitor;
+import fr.inria.diverse.noveltytesting.visitor.AbstractModelVisitor;
+import fr.inria.diverse.noveltytesting.visitor.Visitable;
+import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Map;
 
 /**
  * Created by leiko on 16/10/14.
@@ -22,6 +23,7 @@ public class NoveltyGenerationImpl implements NoveltyGeneration {
 
     private Generator generator = new RandomGenerator();
     private Runner runner = new RunnerImpl();
+    private List<Interface> models = new LinkedList<>();
 
     @Override
     public Interface generateModel(Class<?> clazz) {

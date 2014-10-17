@@ -1,7 +1,7 @@
 package fr.inria.diverse.noveltytesting.model;
 
 import fr.inria.diverse.noveltytesting.visitor.Visitable;
-import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
+import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 import java.util.*;
 
@@ -124,7 +124,19 @@ public class Method implements Visitable {
     }
 
     @Override
-    public void accept(ModelVisitor visitor) {
+    public void accept(Visitor visitor, boolean visitChildren, boolean isRecursive) {
         visitor.visit(this);
+        if (visitChildren) {
+            if (isRecursive) {
+                paramsMap.values().forEach(p -> p.accept(visitor, true, true));
+            } else {
+                paramsMap.values().forEach(p -> p.accept(visitor, false, false));
+            }
+        }
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        this.accept(visitor, true, true);
     }
 }

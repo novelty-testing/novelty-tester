@@ -7,11 +7,14 @@ import fr.inria.diverse.noveltytesting.model.Parameter;
 /**
  * Created by leiko on 17/10/14.
  */
-public class InputOutputVisitor implements ModelVisitor {
+public class InputOutputVisitor extends AbstractModelVisitor {
 
     @Override
     public void visit(Interface i) {
-        i.getMethods().forEach(m -> m.accept(this));
+        StringBuilder str = new StringBuilder();
+        str.append("Model: ");
+        str.append(i.getName());
+        System.out.println(str.toString());
     }
 
     @Override

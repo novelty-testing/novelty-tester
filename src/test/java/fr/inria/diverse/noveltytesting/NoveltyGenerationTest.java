@@ -3,6 +3,7 @@ package fr.inria.diverse.noveltytesting;
 import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Method;
 import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
+import fr.inria.diverse.noveltytesting.visitor.Visitor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,15 +24,22 @@ public class NoveltyGenerationTest {
     }
 
     @Test
-    public void testTestClass() {
-        try {
-            Interface i = novelty.generateModel(Class.forName("fr.inria.diverse.noveltytesting.samples.FooClass"));
-            novelty.generateData(i);
-            novelty.executeMethods(i);
+    public void testTestClass() throws Exception {
+        Class clazz = Class.forName("fr.inria.diverse.noveltytesting.samples.FooClass");
+        Interface i = novelty.generateModel(clazz);
+        novelty.generateData(i);
+        novelty.executeMethods(i);
 
-            new InputOutputVisitor().visit(i);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Interface i2 = novelty.generateModel(clazz);
+        novelty.generateData(i2);
+        novelty.executeMethods(i2);
+
+        Visitor visitor = new InputOutputVisitor();
+
+        i.accept(visitor);
+        i2.accept(visitor);
+
+        System.out.println("FITNESS "+i.fitness(i2));
+
     }
 }

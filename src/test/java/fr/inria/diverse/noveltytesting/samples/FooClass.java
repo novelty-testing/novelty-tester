@@ -20,8 +20,14 @@ public class FooClass {
     public long sum(int a) {
         if (a < 0) {
             return 0;
+        } else if (a > 500000) {
+            return Integer.MAX_VALUE;
         } else {
             return sum(a - 1) + a;
         }
+    }
+
+    public boolean inverse(boolean b) {
+        return !b;
     }
 }

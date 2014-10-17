@@ -5,5 +5,13 @@ package fr.inria.diverse.noveltytesting.visitor;
  */
 public interface Visitable {
 
-    void accept(ModelVisitor visitor);
+    /**
+     * Visits current element.
+     * @param visitor visitor to use for the visit
+     * @param visitChildren if true, accept() will also be called on children
+     * @param isRecursive if true, accept() will also be called on its children's children, etc.
+     */
+    void accept(Visitor visitor, boolean visitChildren, boolean isRecursive);
+
+    void accept(Visitor visitor);
 }

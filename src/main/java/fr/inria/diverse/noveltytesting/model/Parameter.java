@@ -1,7 +1,7 @@
 package fr.inria.diverse.noveltytesting.model;
 
 import fr.inria.diverse.noveltytesting.visitor.Visitable;
-import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
+import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 /**
  * Created by leiko on 16/10/14.
@@ -42,7 +42,12 @@ public class Parameter implements Visitable {
     }
 
     @Override
-    public void accept(ModelVisitor visitor) {
+    public void accept(Visitor visitor, boolean visitChildren, boolean isRecursive) {
         visitor.visit(this);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        this.accept(visitor, true, true);
     }
 }

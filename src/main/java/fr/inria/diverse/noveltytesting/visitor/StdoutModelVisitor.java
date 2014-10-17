@@ -7,7 +7,7 @@ import fr.inria.diverse.noveltytesting.model.Parameter;
 /**
  * Created by leiko on 17/10/14.
  */
-public class StdoutModelVisitor implements ModelVisitor {
+public class StdoutModelVisitor extends AbstractModelVisitor {
 
     @Override
     public void visit(Interface i) {

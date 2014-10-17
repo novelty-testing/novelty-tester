@@ -16,8 +16,6 @@ public interface NoveltyGeneration {
     void executeMethods(Interface anInterface)
             throws InstantiationException, InvocationTargetException, NoSuchMethodException, IllegalAccessException;
 
-
-
     Interface generateModel(String interfaceFQN)
             throws ClassNotFoundException;
 }

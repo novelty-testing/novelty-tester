@@ -1,7 +1,7 @@
 package fr.inria.diverse.noveltytesting.model;
 
 import fr.inria.diverse.noveltytesting.visitor.Visitable;
-import fr.inria.diverse.noveltytesting.visitor.ModelVisitor;
+import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -58,7 +58,35 @@ public class Interface implements Visitable {
     }
 
     @Override
-    public void accept(ModelVisitor visitor) {
+    public void accept(Visitor visitor, boolean visitChildren, boolean isRecursive) {
         visitor.visit(this);
+        if (visitChildren) {
+            if (isRecursive) {
+                methods.forEach(m -> m.accept(visitor, true, true));
+            } else {
+                methods.forEach(m -> m.accept(visitor, false, false));
+            }
+        }
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        this.accept(visitor, true, true);
+    }
+
+    public float fitness(Interface otherInterface) {
+        float fit = 0.0f;
+        for (Method m0 : this.methods) {
+            Method m1 = otherInterface.getMethod(m0.getName(), m0.getParameterTypes());
+            if (m0.getReturnVal() == null || m0.getReturnVal().equals(m1.getReturnVal())) {
+                fit++;
+            }
+        }
+
+        if (this.methods.size() > 0) {
+            return fit / (float) this.methods.size();
+        } else {
+            return 1.0f;
+        }
     }
 }
