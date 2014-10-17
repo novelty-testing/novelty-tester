@@ -1,3 +1,3 @@
 ## novelty-tester
 
-> The files in `src/main/test/resources` are generated via [novelty-testing/haxe-samples](https://github.com/novelty-testing/haxe-samples)
+TODO: NoveltyEngine to automate Model creation + application of Mutation Selection and CrossOver
