@@ -19,7 +19,7 @@ public class RunnerImpl implements Runner {
     public void exec(Class<?> clazz, Interface anInterface)
             throws InstantiationException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         Object instance = clazz.newInstance();
-System.out.println("test");
+
         for (java.lang.reflect.Method binMethod : clazz.getDeclaredMethods()) {
             List<String> paramTypes = new LinkedList<>();
             for (Class<?> c : binMethod.getParameterTypes()) {
