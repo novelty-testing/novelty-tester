@@ -1,4 +1,4 @@
-package fr.inria.diverse.noveltytesting;
+package fr.inria.diverse.noveltytesting.modelgeneration;
 
 import fr.inria.diverse.noveltytesting.generator.Generator;
 import fr.inria.diverse.noveltytesting.generator.RandomGenerator;
@@ -19,11 +19,11 @@ import java.util.Map;
 /**
  * Created by leiko on 16/10/14.
  */
-public class NoveltyGenerationImpl implements NoveltyGeneration {
+public class ModelGenerationImpl implements ModelGeneration {
 
     private Generator generator = new RandomGenerator();
     private Runner runner = new RunnerImpl();
-    private List<Interface> models = new LinkedList<>();
+
 
     @Override
     public Interface generateModel(Class<?> clazz) {
@@ -67,4 +67,7 @@ public class NoveltyGenerationImpl implements NoveltyGeneration {
     public Interface generateModel(String interfaceFQN) throws ClassNotFoundException {
         return this.generateModel(Class.forName(interfaceFQN));
     }
+
+
+
 }

@@ -1,4 +1,4 @@
-package fr.inria.diverse.noveltytesting;
+package fr.inria.diverse.noveltytesting.modelgeneration;
 
 import fr.inria.diverse.noveltytesting.model.Interface;
 
@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Created by leiko on 16/10/14.
  */
-public interface NoveltyGeneration {
+public interface ModelGeneration {
 
     Interface generateModel(Class<?> clazz);
 
@@ -18,4 +18,9 @@ public interface NoveltyGeneration {
 
     Interface generateModel(String interfaceFQN)
             throws ClassNotFoundException;
+    
+
+
+    
+ 
 }

@@ -1,5 +1,6 @@
 package fr.inria.diverse.noveltytesting.model;
 
+import fr.inria.diverse.noveltytesting.behaviour.Behaviour;
 import fr.inria.diverse.noveltytesting.visitor.Visitable;
 import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
@@ -13,7 +14,8 @@ public class Interface implements Visitable {
 
     private String name;
     private List<Method> methods;
-
+    private Behaviour b;
+    
     public Interface() {
         this.methods = new LinkedList<Method>();
     }
