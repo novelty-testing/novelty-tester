@@ -18,9 +18,4 @@ public interface ModelGeneration {
 
     Interface generateModel(String interfaceFQN)
             throws ClassNotFoundException;
-    
-
-
-    
- 
 }

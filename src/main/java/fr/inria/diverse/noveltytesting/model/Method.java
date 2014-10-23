@@ -38,6 +38,10 @@ public class Method implements Visitable {
         return outputs;
     }
 
+    public void addMethodOutput(String key, MethodOutput mo) {
+        this.outputs.put(key, mo);
+    }
+
     public String getName() {
         return name;
     }
