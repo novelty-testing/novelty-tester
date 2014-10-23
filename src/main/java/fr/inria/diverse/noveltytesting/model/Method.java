@@ -12,19 +12,30 @@ public class Method implements Visitable {
 
     private String name;
     private String returnValType;
-    private List<MethodOutput> outputs;
+    private Map<String, MethodOutput> outputs;
     private Map<String, Parameter> paramsMap;
 
-    public List<MethodOutput> getOutputs() {
-		return outputs;
-	}
-
-	public void setOutputs(List<MethodOutput> outputs) {
-		this.outputs = outputs;
-	}
-
-	public Method() {
+    public Method() {
+        this.outputs = new HashMap<>();
         this.paramsMap = new LinkedHashMap<>();
+    }
+
+    public Map<String, MethodOutput> getMethodOutputs() {
+        return outputs;
+    }
+
+    public void setOutputs(Map<String, MethodOutput> outputs) {
+        this.outputs = outputs;
+    }
+
+    public MethodOutput getOutput(String key) {
+        return this.outputs.get(key);
+    }
+
+    public List<MethodOutput> getMethodOutputsList() {
+        List<MethodOutput> outputs = new LinkedList<>();
+        this.outputs.values().forEach(outputs::add);
+        return outputs;
     }
 
     public String getName() {
@@ -57,8 +68,6 @@ public class Method implements Visitable {
         this.returnValType = returnValType;
     }
 
-
-
     public Map<String, Parameter> getParamsMap() {
         return paramsMap;
     }
@@ -69,32 +78,27 @@ public class Method implements Visitable {
 
     public List<String> getParameterTypes() {
         List<String> paramTypes = new LinkedList<>();
-        paramsMap.values().forEach(p -> {
-            paramTypes.add(p.getType());
-        });
+        paramsMap.values().forEach(p -> paramTypes.add(p.getType()));
         return paramTypes;
     }
-    
-    public float getMethodFitness(){
- 
-    		float fitness;
-    		int counter ; 
-    		int frequence = 0; 
-    		
-    		for (int i=0; i < outputs.size(); i++){
-    			counter = 0 ; 
-    		for (int j = 0 ; j < outputs.size(); j++){
-    		 if ( outputs.get(i).getReturnVal().equals(outputs.get(j).getReturnVal())) {
-    			 counter = counter + 1 ;
-    		}
-    		} 
-    		if  (counter > frequence) {
-    		frequence = counter ; 
-    		}
-    		} 
-    		
-    		fitness=frequence/outputs.size();
-    		return fitness;
+
+    public float getMethodFitness() {
+        int counter;
+        int frequency = 0;
+
+        for (Map.Entry<String, MethodOutput> entry : outputs.entrySet()) {
+            counter = 0;
+            for (MethodOutput output : outputs.values()) {
+                if (output.getReturnVal().equals(entry.getValue().getReturnVal())) {
+                    counter = counter + 1;
+                }
+            }
+            if (counter > frequency) {
+                frequency = counter;
+            }
+        }
+
+        return (float) (frequency / outputs.size());
     }
 
     public Object[] getParametersValue() {
@@ -111,10 +115,8 @@ public class Method implements Visitable {
     public String toString() {
         StringBuilder str = new StringBuilder();
         str.append(this.name);
-//        if (this.returnVal != null) {
-//            str.append(": ");
-//            str.append(this.getReturnValType());
-//        }
+        str.append(": ");
+        str.append(this.getReturnValType());
         str.append("\n");
         this.getParameters().forEach(p -> {
             str.append("\t\t");

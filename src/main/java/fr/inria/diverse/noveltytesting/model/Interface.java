@@ -17,7 +17,7 @@ public class Interface implements Visitable {
     private Behaviour b;
     
     public Interface() {
-        this.methods = new LinkedList<Method>();
+        this.methods = new LinkedList<>();
     }
 
     public List<Method> getMethods() {

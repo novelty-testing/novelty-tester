@@ -1,12 +1,8 @@
 package fr.inria.diverse.noveltytesting.model;
 
-import fr.inria.diverse.noveltytesting.behaviour.Behaviour;
-import fr.inria.diverse.noveltytesting.visitor.Visitable;
-import fr.inria.diverse.noveltytesting.visitor.Visitor;
-
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -14,13 +10,13 @@ import java.util.List;
  *
  */
  
-public class Population{
+public class Population {
 
     private List<Interface> models;
 
     
     public Population() {
-        this.models = new LinkedList<Interface>();
+        this.models = new LinkedList<>();
     }
 
     public List<Interface> getModels() {
@@ -51,15 +47,9 @@ public class Population{
 
 
 	public List<Interface> getRelevantModels() {
-		List<Interface> listInterface = new LinkedList<Interface>();
-	     for (Interface i : this.models) {
-	           if (i.getFitness()<1) {
-	        	   listInterface.add(i);
-	                
-	            }
-	        }
-
-	     return listInterface;
+        return this.models.stream()
+                .filter(i -> i.getFitness() < 1)
+                .collect(Collectors.toCollection(LinkedList::new));
 	    }
 
 }
