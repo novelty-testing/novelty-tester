@@ -80,19 +80,16 @@ public class Interface implements Visitable {
         this.accept(visitor, true, true);
     }
 
-    public float fitness(Interface otherInterface) {
-        float fit = 0.0f;
-        for (Method m0 : this.methods) {
-            Method m1 = otherInterface.getMethod(m0.getName(), m0.getParameterTypes());
-            if (m0.getReturnVal() == null || m0.getReturnVal().equals(m1.getReturnVal())) {
-                fit++;
-            }
-        }
+    public float getFitness() {
+    	float fitness;	
+    	float totalFitness=0;
 
-        if (this.methods.size() > 0) {
-            return fit / (float) this.methods.size();
-        } else {
-            return 1.0f;
-        }
+    	for (Method m : this.methods) {
+    		totalFitness+=m.getMethodFitness();
+    		}
+    	fitness=totalFitness/methods.size();
+    	
+    	return fitness;
+    	}
+
     }
-}

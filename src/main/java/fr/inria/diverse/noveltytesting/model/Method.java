@@ -12,18 +12,19 @@ public class Method implements Visitable {
 
     private String name;
     private String returnValType;
-    private Object returnVal;
-
-    private long execTime;
-    private List<Double> cpuConsumptions;
-    private List<Integer> memoryConsumptions;
-
+    private List<MethodOutput> outputs;
     private Map<String, Parameter> paramsMap;
 
-    public Method() {
+    public List<MethodOutput> getOutputs() {
+		return outputs;
+	}
+
+	public void setOutputs(List<MethodOutput> outputs) {
+		this.outputs = outputs;
+	}
+
+	public Method() {
         this.paramsMap = new LinkedHashMap<>();
-        this.cpuConsumptions = new LinkedList<>();
-        this.memoryConsumptions = new LinkedList<>();
     }
 
     public String getName() {
@@ -48,10 +49,6 @@ public class Method implements Visitable {
         }
     }
 
-    public Object getReturnVal() {
-        return returnVal;
-    }
-
     public String getReturnValType() {
         return returnValType;
     }
@@ -60,41 +57,7 @@ public class Method implements Visitable {
         this.returnValType = returnValType;
     }
 
-    public void setReturnVal(Object returnVal) {
-        this.returnVal = returnVal;
-    }
 
-    public long getExecTime() {
-        return execTime;
-    }
-
-    public void setExecTime(long execTime) {
-        this.execTime = execTime;
-    }
-
-    public List<Double> getCpuConsumptions() {
-        return cpuConsumptions;
-    }
-
-    public void setCpuConsumption(double cpuConsumption) {
-        this.cpuConsumptions.add(cpuConsumption);
-    }
-
-    public List<Integer> getMemoryConsumptions() {
-        return memoryConsumptions;
-    }
-
-    public void addMemoryConsumption(int memoryConsumption) {
-        this.memoryConsumptions.add(memoryConsumption);
-    }
-
-    public void setCpuConsumptions(List<Double> cpuConsumptions) {
-        this.cpuConsumptions = cpuConsumptions;
-    }
-
-    public void setMemoryConsumptions(List<Integer> memoryConsumptions) {
-        this.memoryConsumptions = memoryConsumptions;
-    }
 
     public Map<String, Parameter> getParamsMap() {
         return paramsMap;
@@ -111,6 +74,28 @@ public class Method implements Visitable {
         });
         return paramTypes;
     }
+    
+    public float getMethodFitness(){
+ 
+    		float fitness;
+    		int counter ; 
+    		int frequence = 0; 
+    		
+    		for (int i=0; i < outputs.size(); i++){
+    			counter = 0 ; 
+    		for (int j = 0 ; j < outputs.size(); j++){
+    		 if ( outputs.get(i).getReturnVal().equals(outputs.get(j).getReturnVal())) {
+    			 counter = counter + 1 ;
+    		}
+    		} 
+    		if  (counter > frequence) {
+    		frequence = counter ; 
+    		}
+    		} 
+    		
+    		fitness=frequence/outputs.size();
+    		return fitness;
+    }
 
     public Object[] getParametersValue() {
         Object[] paramValues = new Object[paramsMap.size()];
@@ -126,10 +111,10 @@ public class Method implements Visitable {
     public String toString() {
         StringBuilder str = new StringBuilder();
         str.append(this.name);
-        if (this.returnVal != null) {
-            str.append(": ");
-            str.append(this.getReturnValType());
-        }
+//        if (this.returnVal != null) {
+//            str.append(": ");
+//            str.append(this.getReturnValType());
+//        }
         str.append("\n");
         this.getParameters().forEach(p -> {
             str.append("\t\t");

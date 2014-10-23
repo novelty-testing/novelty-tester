@@ -1,7 +1,6 @@
-package fr.inria.diverse.noveltytesting.population;
+package fr.inria.diverse.noveltytesting.model;
 
 import fr.inria.diverse.noveltytesting.behaviour.Behaviour;
-import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.visitor.Visitable;
 import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
@@ -14,13 +13,13 @@ import java.util.List;
  * @author mboussaa
  *
  */
-
-public class population implements Visitable {
+ 
+public class Population{
 
     private List<Interface> models;
 
     
-    public population() {
+    public Population() {
         this.models = new LinkedList<Interface>();
     }
 
@@ -51,21 +50,16 @@ public class population implements Visitable {
 	}
 
 
-    @Override
-    public void accept(Visitor visitor, boolean visitChildren, boolean isRecursive) {
-        visitor.visit(this);
-        if (visitChildren) {
-            if (isRecursive) {
-                models.forEach(m -> m.accept(visitor, true, true));
-            } else {
-            	models.forEach(m -> m.accept(visitor, false, false));
-            }
-        }
-    }
+	public List<Interface> getRelevantModels() {
+		List<Interface> listInterface = new LinkedList<Interface>();
+	     for (Interface i : this.models) {
+	           if (i.getFitness()<1) {
+	        	   listInterface.add(i);
+	                
+	            }
+	        }
 
-    @Override
-    public void accept(Visitor visitor) {
-        this.accept(visitor, true, true);
-    }
+	     return listInterface;
+	    }
 
 }
