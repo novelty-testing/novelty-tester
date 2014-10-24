@@ -40,4 +40,8 @@ public class Population {
     public void removeInterface(Interface anInterface) {
         this.interfaces.remove(anInterface);
     }
+    
+    public int getSize() {
+        return this.interfaces.size();
+    }
 }
