@@ -14,10 +14,7 @@ public class InputOutputVisitor extends AbstractModelVisitor {
 
     @Override
     public void visit(Interface i) {
-        StringBuilder str = new StringBuilder();
-        str.append("Model: ");
-        str.append(i.getName());
-        System.out.println(str.toString());
+        System.out.println("Model: " + i.getName());
     }
 
     @Override
