@@ -102,7 +102,11 @@ public class Method implements Visitable {
             }
         }
 
-        return (float) (frequency / outputs.size());
+        if (outputs.size() == 0) {
+            return 1.0f;
+        } else {
+            return (float) (frequency / outputs.size());
+        }
     }
 
     public Object[] getParametersValue() {
