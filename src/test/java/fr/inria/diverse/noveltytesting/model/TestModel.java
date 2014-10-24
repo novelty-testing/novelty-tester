@@ -17,7 +17,10 @@ public class TestModel {
 
         Method m1 = new Method();
         m1.setName("toString");
+<<<<<<< HEAD
         //m1.setReturnVal("foo");
+=======
+>>>>>>> branch 'master' of https://github.com/novelty-testing/novelty-tester.git
         m1.setReturnValType(String.class.getTypeName());
 
         Parameter p0 = new Parameter();

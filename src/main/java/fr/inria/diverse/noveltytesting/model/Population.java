@@ -1,65 +1,43 @@
 package fr.inria.diverse.noveltytesting.model;
 
-import fr.inria.diverse.noveltytesting.behaviour.Behaviour;
-import fr.inria.diverse.noveltytesting.visitor.Visitable;
-import fr.inria.diverse.noveltytesting.visitor.Visitor;
-
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
- * @author mboussaa
+ * @author leiko
  *
  */
  
-public class Population{
+public class Population {
 
-    private List<Interface> models;
+    private List<Interface> interfaces;
 
-    
     public Population() {
-        this.models = new LinkedList<Interface>();
+        this.interfaces = new ArrayList<>();
     }
 
-    public List<Interface> getModels() {
-		return models;
-	}
+    public List<Interface> getInterfaces() {
+        return interfaces;
+    }
 
-	public void setModels(List<Interface> models) {
-		this.models = models;
-	}
+    public void addInterfaces(List<Interface> interfaces) {
+        this.interfaces.addAll(interfaces);
+    }
 
+    public void addInterface(Interface i) {
+        this.interfaces.add(i);
+    }
 
-    public Interface get(int index) {
-		return models.get(index);
-	}
-
-	public boolean add(Interface e) {
-		return models.add(e);
-	}
-
-
-	public Interface set(int index, Interface element) {
-		return models.set(index, element);
-	}
-
-	public void add(int index, Interface element) {
-		models.add(index, element);
-	}
-
-
-	public List<Interface> getRelevantModels() {
-		List<Interface> listInterface = new LinkedList<Interface>();
-	     for (Interface i : this.models) {
-	           if (i.getFitness()<1) {
-	        	   listInterface.add(i);
-	                
-	            }
-	        }
-
-	     return listInterface;
+    public List<Interface> getRelevantModels() {
+        return this.interfaces.stream()
+                .filter(i -> i.getFitness() < 1)
+                .collect(Collectors.toCollection(LinkedList::new));
 	    }
 
+    public void removeInterface(Interface anInterface) {
+        this.interfaces.remove(anInterface);
+    }
 }

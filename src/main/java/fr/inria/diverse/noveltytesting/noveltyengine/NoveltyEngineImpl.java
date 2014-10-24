@@ -1,65 +1,63 @@
 package fr.inria.diverse.noveltytesting.noveltyengine;
 
-import fr.inria.diverse.noveltytesting.geneticoperators.GeneticOperators;
 import fr.inria.diverse.noveltytesting.model.Interface;
-import fr.inria.diverse.noveltytesting.model.Method;
 import fr.inria.diverse.noveltytesting.model.Population;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGeneration;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGenerationImpl;
-import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
-import fr.inria.diverse.noveltytesting.visitor.Visitor;
+import fr.inria.diverse.noveltytesting.operator.CrossoverOperator;
+import fr.inria.diverse.noveltytesting.operator.MutationOperator;
+import fr.inria.diverse.noveltytesting.operator.Operator;
+import fr.inria.diverse.noveltytesting.operator.SelectionOperator;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-import java.util.LinkedList;
-
 
 /**
- * @author mboussaa
+ * @author leiko
  *
  */
-
 public class NoveltyEngineImpl implements NoveltyEngine  {
 
-    private Population models;
+	private Operator selection = new SelectionOperator();
+	private Operator mutation = new MutationOperator();
+	private Operator crossover = new CrossoverOperator();
 
-    public void NoveltyEngineImpl() {
-    	models = new Population();
-    }
-    
 	@Override
-    public void generatePopulation() throws Exception {
-		
-		ModelGeneration model=new ModelGenerationImpl();
-		
-        Class clazz = Class.forName("fr.inria.diverse.noveltytesting.samples.FooClass");
+	public Population generatePopulation(String classFqn, int nb) throws Exception {
+		ModelGeneration gen = new ModelGenerationImpl();
+		Class<?> clazz = Class.forName(classFqn);
 
-        for (int numberSolutions = 0; numberSolutions < 10; numberSolutions++) {
+		Population population = new Population();
 
-        Interface i = model.generateModel(clazz);
-        model.generateData(i);
-        model.executeMethods(i);
-        
-        models.add(i);
+		for (int i = 0; i < nb; i++) {
+			Interface anInterface = gen.generateModel(clazz);
+			population.addInterface(anInterface);
+		}
 
-    	}
-    }
-    
-	@Override
-	public void updateBehaviour(Population models) {
-		
-
+		return population;
 	}
 
 	@Override
-	public void generateNextPop(Population models) {
-		GeneticOperators operators = new GeneticOperators();
-		operators.selectionData(models);
-		operators.crossoverData(models);
-		operators.mutationData(models);
-
+	public void generateData(Population population) {
+		ModelGeneration gen = new ModelGenerationImpl();
+		population.getInterfaces().forEach(gen::generateData);
 	}
 
+	@Override
+	public void updateBehaviour(Population models) {}
 
+	@Override
+	public void executeMethods(Population population)
+			throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		ModelGeneration gen = new ModelGenerationImpl();
+		for (Interface i : population.getInterfaces()) {
+			gen.executeMethods(i);
+		}
+	}
 
+	@Override
+	public void process(Population population) {
+		selection.process(population);
+		mutation.process(population);
+		crossover.process(population);
+	}
 }

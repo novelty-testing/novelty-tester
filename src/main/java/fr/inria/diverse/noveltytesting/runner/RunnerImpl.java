@@ -2,6 +2,7 @@ package fr.inria.diverse.noveltytesting.runner;
 
 import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Method;
+import fr.inria.diverse.noveltytesting.model.MethodOutput;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
@@ -30,6 +31,11 @@ public class RunnerImpl implements Runner {
                 Object returnVal = binMethod.invoke(instance, method.getParametersValue());
                 if (returnVal != null) {
                     //method.setReturnVal(returnVal);
+                    // TODO improve that
+                    MethodOutput mo = new MethodOutput();
+                    mo.setReturnVal(returnVal);
+                    method.addMethodOutput("java", mo);
+
                 }
             } else {
                 // TODO method not found in model (this is not normal)

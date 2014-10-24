@@ -1,7 +1,10 @@
 package fr.inria.diverse.noveltytesting;
 
 import fr.inria.diverse.noveltytesting.model.Interface;
+<<<<<<< HEAD
 import fr.inria.diverse.noveltytesting.model.Method;
+=======
+>>>>>>> branch 'master' of https://github.com/novelty-testing/novelty-tester.git
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGeneration;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGenerationImpl;
 import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
@@ -9,10 +12,6 @@ import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Unit test
@@ -40,11 +39,14 @@ public class NoveltyGenerationTest {
         Interface i = novelty.generateModel(clazz);
         novelty.generateData(i);
         novelty.executeMethods(i);
+<<<<<<< HEAD
        // novelty.addModel(i);
         
+=======
+>>>>>>> branch 'master' of https://github.com/novelty-testing/novelty-tester.git
         Visitor visitor = new InputOutputVisitor();
-
         i.accept(visitor);
+<<<<<<< HEAD
 
     	}
         //novelty.generateNextPop();
@@ -55,5 +57,8 @@ public class NoveltyGenerationTest {
 
         //System.out.println("FITNESS "+i.fitness(i2));
 
+=======
+        System.out.println("FITNESS "+i.getFitness());
+>>>>>>> branch 'master' of https://github.com/novelty-testing/novelty-tester.git
     }
 }

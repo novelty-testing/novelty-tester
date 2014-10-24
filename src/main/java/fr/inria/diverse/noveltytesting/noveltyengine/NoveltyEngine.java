@@ -1,27 +1,23 @@
 package fr.inria.diverse.noveltytesting.noveltyengine;
 
-import fr.inria.diverse.noveltytesting.model.Interface;
-import fr.inria.diverse.noveltytesting.model.Method;
 import fr.inria.diverse.noveltytesting.model.Population;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
- * This class runs the methods of the given Interface model using the generated
- * data for the different parameters
  *
  * Created by leiko on 17/10/14.
  */
-public interface NoveltyEngine{
-	
-	void generatePopulation() throws Exception;
+public interface NoveltyEngine {
 
-	void generateNextPop(Population models);
+	Population generatePopulation(String classFqn, int nb) throws Exception;
 
-	void updateBehaviour(Population models);
-	
+	void updateBehaviour(Population population);
 
-   
+    void generateData(Population population);
+
+    void executeMethods(Population population)
+            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+
+    void process(Population population);
 }

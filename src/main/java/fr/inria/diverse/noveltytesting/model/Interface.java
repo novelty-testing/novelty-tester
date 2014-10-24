@@ -15,9 +15,9 @@ public class Interface implements Visitable {
     private String name;
     private List<Method> methods;
     private Behaviour b;
-    
+
     public Interface() {
-        this.methods = new LinkedList<Method>();
+        this.methods = new LinkedList<>();
     }
 
     public List<Method> getMethods() {
@@ -81,15 +81,16 @@ public class Interface implements Visitable {
     }
 
     public float getFitness() {
-    	float fitness;	
-    	float totalFitness=0;
+        float fit = 0.0f;
 
-    	for (Method m : this.methods) {
-    		totalFitness+=m.getMethodFitness();
-    		}
-    	fitness=totalFitness/methods.size();
-    	
-    	return fitness;
-    	}
+        for (Method m : this.methods) {
+            fit += m.getMethodFitness();
+        }
 
+        if (this.methods.size() > 0) {
+            return fit / (float) this.methods.size();
+        } else {
+            return 1.0f;
+        }
     }
+}
