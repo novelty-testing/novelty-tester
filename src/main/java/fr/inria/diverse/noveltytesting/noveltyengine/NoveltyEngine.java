@@ -2,7 +2,7 @@ package fr.inria.diverse.noveltytesting.noveltyengine;
 
 import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Method;
-import fr.inria.diverse.noveltytesting.population.population;
+import fr.inria.diverse.noveltytesting.model.Population;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
@@ -16,9 +16,11 @@ import java.util.List;
  */
 public interface NoveltyEngine{
 	
-	population generatePopulation() throws Exception;
+	void generatePopulation() throws Exception;
 
-	population generateNextPop(population models);
+	void generateNextPop(Population models);
+
+	void updateBehaviour(Population models);
 	
 
    

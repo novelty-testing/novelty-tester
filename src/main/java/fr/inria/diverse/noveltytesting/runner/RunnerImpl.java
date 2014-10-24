@@ -29,7 +29,7 @@ public class RunnerImpl implements Runner {
             if (method != null) {
                 Object returnVal = binMethod.invoke(instance, method.getParametersValue());
                 if (returnVal != null) {
-                    method.setReturnVal(returnVal);
+                    //method.setReturnVal(returnVal);
                 }
             } else {
                 // TODO method not found in model (this is not normal)

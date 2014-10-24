@@ -1,18 +1,18 @@
 package fr.inria.diverse.noveltytesting.noveltyengine;
 
-import fr.inria.diverse.noveltytesting.geneticoperators.SelectionOperator;
+import fr.inria.diverse.noveltytesting.geneticoperators.GeneticOperators;
 import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Method;
+import fr.inria.diverse.noveltytesting.model.Population;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGeneration;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGenerationImpl;
-import fr.inria.diverse.noveltytesting.population.population;
 import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
 import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
+
 
 /**
  * @author mboussaa
@@ -21,15 +21,14 @@ import java.util.List;
 
 public class NoveltyEngineImpl implements NoveltyEngine  {
 
-    private population models;
-    
+    private Population models;
 
     public void NoveltyEngineImpl() {
-    	models = new population();
+    	models = new Population();
     }
     
 	@Override
-    public population generatePopulation() throws Exception {
+    public void generatePopulation() throws Exception {
 		
 		ModelGeneration model=new ModelGenerationImpl();
 		
@@ -44,19 +43,21 @@ public class NoveltyEngineImpl implements NoveltyEngine  {
         models.add(i);
 
     	}
-
-       return models;
     }
     
+	@Override
+	public void updateBehaviour(Population models) {
+		
+
+	}
 
 	@Override
-	public population generateNextPop(population models) {
-		population pop = models;
-		pop.SelectionOperator();
-		pop.CrossoverOperator();
-		pop.MutationOperator();
+	public void generateNextPop(Population models) {
+		GeneticOperators operators = new GeneticOperators();
+		operators.selectionData(models);
+		operators.crossoverData(models);
+		operators.mutationData(models);
 
-		 return pop;
 	}
 
 

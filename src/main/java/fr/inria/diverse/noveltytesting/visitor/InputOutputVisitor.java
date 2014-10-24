@@ -42,7 +42,7 @@ public class InputOutputVisitor extends AbstractModelVisitor {
         str.append("\n");
         str.append("outputs:\n");
         str.append("\t");
-        str.append(m.getReturnVal());
+        //str.append(m.getReturnVal());
         str.append("\n============================");
         System.out.println(str.toString());
     }

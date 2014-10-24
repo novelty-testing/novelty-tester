@@ -20,7 +20,7 @@ public class RandomGenerator extends AbstractGenerator {
     @Override
     protected long genLong() {
         return new Random().nextLong();
-    }
+    }     
 
     @Override
     protected double genDouble() {

@@ -17,7 +17,7 @@ public class TestModel {
 
         Method m1 = new Method();
         m1.setName("toString");
-        m1.setReturnVal("foo");
+        //m1.setReturnVal("foo");
         m1.setReturnValType(String.class.getTypeName());
 
         Parameter p0 = new Parameter();
