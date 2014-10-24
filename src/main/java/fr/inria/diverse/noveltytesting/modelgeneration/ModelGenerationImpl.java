@@ -26,6 +26,11 @@ public class ModelGenerationImpl implements ModelGeneration {
 
 
     @Override
+    public void setGenerator(Generator gen) {
+        this.generator = gen;
+    }
+
+    @Override
     public Interface generateModel(Class<?> clazz) {
         Interface i = new Interface();
         i.setName(clazz.getName());
