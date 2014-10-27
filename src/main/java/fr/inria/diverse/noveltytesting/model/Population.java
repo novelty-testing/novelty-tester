@@ -14,9 +14,22 @@ import java.util.stream.Collectors;
 public class Population {
 
     private List<Interface> interfaces;
+    private int size;
+    private Class<?> clazz;
 
     public Population() {
         this.interfaces = new ArrayList<>();
+    }
+    
+    public Population(int n) {
+    	this.interfaces = new ArrayList<>();
+        this.size=n;
+    }
+    
+    public Population(int n,Class<?> clazz) {
+    	this.interfaces = new ArrayList<>();
+        this.size=n;
+        this.clazz=clazz;
     }
 
     public List<Interface> getInterfaces() {
@@ -42,6 +55,14 @@ public class Population {
     }
     
     public int getSize() {
-        return this.interfaces.size();
+        return size;
+    }
+    
+    public int setSize(int n) {
+        return this.size=n;
+    }
+    
+    public int getEmptyInterfaces() {
+        return this.getSize()-this.getInterfaces().size();
     }
 }
