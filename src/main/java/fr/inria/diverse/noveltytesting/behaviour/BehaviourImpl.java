@@ -27,10 +27,10 @@ public class BehaviourImpl implements Behaviour {
 
 	@Override
 	public void setNoveltyMetric(Interface anInterface, Population population,
-			Population Archive) {
+			Population archive) {
 
 		noveltyMetric = getDistFromPopulation(anInterface, population)
-				+ getDistFromArchive(anInterface, Archive);
+				+ getDistFromArchive(anInterface, archive);
 	}
 
 	public double getDistFromArchive(Interface anInterface, Population Archive) {
@@ -44,9 +44,7 @@ public class BehaviourImpl implements Behaviour {
 		return distFromArchive;
 	}
 
-	public double getDistFromPopulation(Interface anInterface,
-			Population population) {
-
+	public double getDistFromPopulation(Interface anInterface, Population population) {
 		double distFromPopulation = 0;
 		double dist;
 		for (Interface i : population.getInterfaces()) {
@@ -137,15 +135,12 @@ public class BehaviourImpl implements Behaviour {
 	public int distanceChar(Object a, Object b) {
 		char a1 = a.toString().charAt(0);
 		char b1 = b.toString().charAt(0);
-		int diff = Character.toLowerCase(a1) - Character.toLowerCase(b1);
-		return diff;
+        return Character.toLowerCase(a1) - Character.toLowerCase(b1);
 	}
 
 	public double distanceNumbers(Object a, Object b) {
 
-		double diff = Double.parseDouble(a.toString())
-				- Double.parseDouble(b.toString());
-		return diff;
+        return Double.parseDouble(a.toString()) - Double.parseDouble(b.toString());
 	}
 
 }

@@ -9,8 +9,7 @@ import fr.inria.diverse.noveltytesting.model.Population;
 
 public interface Behaviour {
 
-	
-	void setNoveltyMetric(Interface anInterface,Population population,Population Archive);
+	void setNoveltyMetric(Interface anInterface, Population population, Population archive);
 	double getNoveltyMetric();
 
 

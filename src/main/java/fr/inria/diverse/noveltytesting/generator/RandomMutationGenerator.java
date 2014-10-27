@@ -1,7 +1,8 @@
-package fr.inria.diverse.noveltytesting.generator.mutationgenerator;
+package fr.inria.diverse.noveltytesting.generator;
 
 import java.util.Random;
 
+import fr.inria.diverse.noveltytesting.generator.AbstractGenerator;
 import fr.inria.diverse.noveltytesting.model.Parameter;
 
 
@@ -10,7 +11,7 @@ import fr.inria.diverse.noveltytesting.model.Parameter;
  *
  */
 
-public class RandomMutationGenerator extends AbstractMutationGenerator {
+public class RandomMutationGenerator extends AbstractGenerator {
 
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz" +
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
@@ -26,9 +27,7 @@ public class RandomMutationGenerator extends AbstractMutationGenerator {
 		int min = (Integer) p.getValue()-rangeMutation;
 		int max = (Integer) p.getValue()+rangeMutation;
 
-		int res=(int) (min + (Math.random() * (max - min)));
-    	
-        return res;
+        return (int) (min + (Math.random() * (max - min)));
     }
 
     @Override
@@ -37,19 +36,15 @@ public class RandomMutationGenerator extends AbstractMutationGenerator {
     	long min = (Long) p.getValue()-rangeMutation;
     	long max = (Long) p.getValue()+rangeMutation;
 
-		long res=(long) (min + (Math.random() * (max - min)));
-
-	  return res;
+        return (long) (min + (Math.random() * (max - min)));
     }     
 
     @Override
     protected double genDouble(Parameter p) {
     	double min = (double) p.getValue()-rangeMutation;
     	double max = (double) p.getValue()+rangeMutation;
-    	
-    	double res = min + new Random().nextFloat() * (max - min);
-		
-        return res;
+
+        return min + new Random().nextFloat() * (max - min);
     }
 
     @Override
@@ -57,10 +52,8 @@ public class RandomMutationGenerator extends AbstractMutationGenerator {
     	
     	float min = (float) p.getValue()-rangeMutation;
     	float max = (float) p.getValue()+rangeMutation;
-    	
-		float res = min + new Random().nextFloat() * (max - min);
-		
-        return res;
+
+        return min + new Random().nextFloat() * (max - min);
     }
 
     @Override
@@ -83,9 +76,7 @@ public class RandomMutationGenerator extends AbstractMutationGenerator {
     	short min = (short) ((short)p.getValue()-rangeMutation);
     	short max =  (short) ((short)p.getValue()-rangeMutation);
 
-    	short res=(short) (min + (Math.random() * (max - min)));
-    	
-        return res;
+        return (short) (min + (Math.random() * (max - min)));
     }
 
     @Override
@@ -94,9 +85,7 @@ public class RandomMutationGenerator extends AbstractMutationGenerator {
     	byte min = (byte) ((byte) p.getValue()-rangeMutation);
     	byte max =  (byte) ((byte)p.getValue()-rangeMutation);
 
-    	byte res=(byte) (min + (Math.random() * (max - min)));
-    	
-        return res;
+        return (byte) (min + (Math.random() * (max - min)));
      
     }
 
@@ -115,8 +104,5 @@ public class RandomMutationGenerator extends AbstractMutationGenerator {
             nbMutations--;
         }
         return str.toString();
-
     }
-
-
 }

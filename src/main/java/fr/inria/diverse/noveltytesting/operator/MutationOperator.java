@@ -1,7 +1,7 @@
 package fr.inria.diverse.noveltytesting.operator;
 
 import fr.inria.diverse.noveltytesting.generator.Generator;
-import fr.inria.diverse.noveltytesting.generator.mutationgenerator.RandomMutationGenerator;
+import fr.inria.diverse.noveltytesting.generator.RandomMutationGenerator;
 import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Population;
 
