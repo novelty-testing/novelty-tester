@@ -95,15 +95,4 @@ public class RandomMutationGenerator extends RandomGenerator {
     public void setMutationRange(int range) {
         this.mutationRange = range;
     }
-
-    public static void main(String[] args) {
-        Parameter p = new Parameter();
-        p.setName("foo");
-        p.setType("java.lang.String");
-        p.setValue("Lorem ipsum dolor sit amet");
-        RandomMutationGenerator gen = new RandomMutationGenerator();
-        for (int i=0; i < 10; i++) {
-            System.out.println(gen.genString(p));
-        }
-    }
 }
