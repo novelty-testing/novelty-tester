@@ -10,14 +10,13 @@ import java.lang.reflect.InvocationTargetException;
  */
 public interface NoveltyEngine {
 
-	Population generatePopulation(String classFqn, int nb) throws Exception;
+	Population generateInitialPopulation();
 
-	void updateBehaviour(Population population);
+	void executeMethods(Population population) throws NoSuchMethodException,InstantiationException, IllegalAccessException, InvocationTargetException;
 
-    void generateData(Population population);
+	void generateNextPopulation(Population population);
 
-    void executeMethods(Population population)
-            throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException;
+	void ApplyGeneticOperators(Population population);
 
-    void process(Population population);
+	void EvaluateSolutions(Population population);
 }

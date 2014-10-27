@@ -1,74 +1,83 @@
 package fr.inria.diverse.noveltytesting.noveltyengine;
 
-import fr.inria.diverse.noveltytesting.behaviour.Behaviour;
-import fr.inria.diverse.noveltytesting.behaviour.BehaviourImpl;
+import fr.inria.diverse.noveltytesting.geneticoperators.Crossover;
+import fr.inria.diverse.noveltytesting.geneticoperators.Evaluation;
+import fr.inria.diverse.noveltytesting.geneticoperators.Mutation;
+import fr.inria.diverse.noveltytesting.geneticoperators.Operator;
+import fr.inria.diverse.noveltytesting.geneticoperators.Selection;
 import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Population;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGeneration;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGenerationImpl;
-import fr.inria.diverse.noveltytesting.operator.CrossoverOperator;
-import fr.inria.diverse.noveltytesting.operator.MutationOperator;
-import fr.inria.diverse.noveltytesting.operator.Operator;
-import fr.inria.diverse.noveltytesting.operator.SelectionOperator;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author leiko
  *
  */
 
-public class NoveltyEngineImpl implements NoveltyEngine  {
+public class NoveltyEngineImpl implements NoveltyEngine {
 
-	private Operator selection = new SelectionOperator();
-	private Operator mutation = new MutationOperator();
-	private Operator crossover = new CrossoverOperator();
+	private Operator selection;
+	private Operator mutation;
+	private Operator crossover;
+	private Operator evaluation;
+
+	ModelGeneration gen;
+
+	private int popSize;
+	private int archiveSize;
+	private Class<?> clazz;
 
 	/**
 	 * kind of data base of visited/selected interfaces over all populations
-	 * updated each selection process
+	 * updated each selection process should have a fixed limit = 1000
 	 */
-	public static Population Archive = new Population();
-	
+	public static Population Archive;
+
 	/**
-	 * kind of data base of relevant interfaces over all populations
-	 * updated each selection process
+	 * kind of data base of relevant interfaces over all populations updated
+	 * each selection process
 	 */
-	public static Population relevantInterfaces = new Population();
-	
+	public static Population relevantInterfaces;
+
+	public NoveltyEngineImpl(String classFqn, int popSize, int archiveSize) throws ClassNotFoundException {
+
+		this.clazz = Class.forName(classFqn);
+		this.popSize = popSize;
+		this.archiveSize = archiveSize;
+
+		this.selection = new Selection();
+		this.mutation = new Mutation();
+		this.crossover = new Crossover();
+		this.evaluation = new Evaluation();
+
+		this.Archive = new Population(archiveSize);
+		this.relevantInterfaces = new Population();
+
+		this.gen = new ModelGenerationImpl();
+	}
+
 	@Override
-	public Population generatePopulation(String classFqn, int nb) throws Exception {
-		ModelGeneration gen = new ModelGenerationImpl();
-		Class<?> clazz = Class.forName(classFqn);
-
+	public Population generateInitialPopulation() {
 		Population population = new Population();
-
-		for (int i = 0; i < nb; i++) {
-			Interface anInterface = gen.generateModel(clazz);
+		for (int i = 0; i < popSize; i++) {
+			Interface anInterface = gen.generateModel(this.clazz);
 			population.addInterface(anInterface);
 		}
+		population.setSize(popSize);
+		population.getInterfaces().forEach(gen::generateData);
 
 		return population;
 	}
 
 	@Override
-	public void generateData(Population population) {
-		ModelGeneration gen = new ModelGenerationImpl();
-		population.getInterfaces().forEach(gen::generateData);
-	}
+	public void executeMethods(Population population) throws NoSuchMethodException, InstantiationException,
+			IllegalAccessException, InvocationTargetException {
 
-	@Override
-	public void updateBehaviour(Population population) {
-		Behaviour b= new BehaviourImpl();
-		for (Interface i : population.getInterfaces()) {
-			b.setNoveltyMetric(i, population, Archive);
-			i.setBehaviour(b);
-		}
-	}
-
-	@Override
-	public void executeMethods(Population population)
-			throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		ModelGeneration gen = new ModelGenerationImpl();
 		for (Interface i : population.getInterfaces()) {
 			gen.executeMethods(i);
@@ -76,9 +85,27 @@ public class NoveltyEngineImpl implements NoveltyEngine  {
 	}
 
 	@Override
-	public void process(Population population) {
+	public void ApplyGeneticOperators(Population population) {
 		selection.process(population);
 		mutation.process(population);
 		crossover.process(population);
 	}
+
+	@Override
+	public void EvaluateSolutions(Population population) {
+		evaluation.process(population);
+
+	}
+
+	@Override
+	public void generateNextPopulation(Population population) {
+		List<Interface> newInterfaces = new ArrayList<>();
+		for (int i = 0; i < population.getEmptyInterfaces(); i++) {
+			Interface anInterface = gen.generateModel(clazz);
+			newInterfaces.add(anInterface);
+		}
+		newInterfaces.forEach(gen::generateData);
+		population.addInterfaces(newInterfaces);
+	}
+
 }
