@@ -15,7 +15,7 @@ import org.junit.Test;
 public class NoveltyGenerationTest {
 
     private ModelGeneration novelty;
-
+    
     @Before
     public void testBefore() {
         novelty = new ModelGenerationImpl();

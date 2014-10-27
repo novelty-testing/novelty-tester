@@ -14,9 +14,17 @@ public class Interface implements Visitable {
 
     private String name;
     private List<Method> methods;
-    private Behaviour b;
+    private Behaviour behaviour;
 
-    public Interface() {
+    public Behaviour getBehaviour() {
+		return behaviour;
+	}
+
+	public void setBehaviour(Behaviour b) {
+		this.behaviour = behaviour;
+	}
+
+	public Interface() {
         this.methods = new LinkedList<>();
     }
 
