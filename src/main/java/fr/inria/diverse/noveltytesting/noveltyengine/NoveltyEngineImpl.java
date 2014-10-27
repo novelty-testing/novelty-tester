@@ -30,6 +30,12 @@ public class NoveltyEngineImpl implements NoveltyEngine  {
 	 */
 	public static Population Archive = new Population();
 	
+	/**
+	 * kind of data base of relevant interfaces over all populations
+	 * updated each selection process
+	 */
+	public static Population relevantInterfaces = new Population();
+	
 	@Override
 	public Population generatePopulation(String classFqn, int nb) throws Exception {
 		ModelGeneration gen = new ModelGenerationImpl();
