@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class RandomGenerator extends AbstractGenerator {
 
-    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz" +
+    protected static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz" +
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
             "0123456789" +
             "&é\"'(-è_çà)=ù*^,;:!?./§~#{[|`\\^@]}]+*²<>%µ£¨";
@@ -31,7 +31,7 @@ public class RandomGenerator extends AbstractGenerator {
 
     @Override
     protected float genFloat(Parameter p) {
-        return new Random().nextFloat();
+        return Float.MIN_VALUE + new Random().nextFloat() * (Float.MAX_VALUE - Float.MIN_VALUE);
     }
 
     @Override

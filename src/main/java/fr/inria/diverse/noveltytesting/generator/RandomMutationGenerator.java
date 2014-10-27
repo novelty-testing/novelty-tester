@@ -2,7 +2,6 @@ package fr.inria.diverse.noveltytesting.generator;
 
 import java.util.Random;
 
-import fr.inria.diverse.noveltytesting.generator.AbstractGenerator;
 import fr.inria.diverse.noveltytesting.model.Parameter;
 
 
@@ -11,98 +10,100 @@ import fr.inria.diverse.noveltytesting.model.Parameter;
  *
  */
 
-public class RandomMutationGenerator extends AbstractGenerator {
+public class RandomMutationGenerator extends RandomGenerator {
 
-    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz" +
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-            "0123456789" +
-            "&é\"'(-è_çà)=ù*^,;:!?./§~#{[|`\\^@]}]+*²<>%µ£¨";
-    
-    private int rangeMutation = 50;
-    
+    private int mutationRange = 50;
 
     @Override
     protected int genInteger(Parameter p) {
-    	
-		int min = (Integer) p.getValue()-rangeMutation;
-		int max = (Integer) p.getValue()+rangeMutation;
-
+        int val = (int) p.getValue();
+        int min = val - mutationRange;
+        int max = val + mutationRange;
         return (int) (min + (Math.random() * (max - min)));
     }
 
     @Override
     protected long genLong(Parameter p) {
-
-    	long min = (Long) p.getValue()-rangeMutation;
-    	long max = (Long) p.getValue()+rangeMutation;
-
+        long val = (long) p.getValue();
+        long min = val - mutationRange;
+        long max = val + mutationRange;
         return (long) (min + (Math.random() * (max - min)));
-    }     
+    }
 
     @Override
     protected double genDouble(Parameter p) {
-    	double min = (double) p.getValue()-rangeMutation;
-    	double max = (double) p.getValue()+rangeMutation;
-
+        double val = (double) p.getValue();
+        double min = val - mutationRange;
+        double max = val + mutationRange;
         return min + new Random().nextFloat() * (max - min);
     }
 
     @Override
     protected float genFloat(Parameter p) {
-    	
-    	float min = (float) p.getValue()-rangeMutation;
-    	float max = (float) p.getValue()+rangeMutation;
-
+        float val = (float) p.getValue();
+        float min = val - mutationRange;
+        float max = val + mutationRange;
         return min + new Random().nextFloat() * (max - min);
     }
 
     @Override
     protected char genCharacter(Parameter p) {
-    	char res;
-    	
-    	int pos=CHARACTERS.indexOf((char)p.getValue());
-    	if ((pos+1)==CHARACTERS.length()){
-    		res=CHARACTERS.charAt(0);
-    	}else{
-    		res=CHARACTERS.charAt(pos+1);
-    	}
-
-        return res;
+        char val = (char) p.getValue();
+        int pos = CHARACTERS.indexOf(val);
+        if ((pos+1) == CHARACTERS.length()) {
+            return super.genCharacter(null);
+        } else {
+            return CHARACTERS.charAt(pos + 1);
+        }
     }
 
     @Override
     protected short genShort(Parameter p) {
-    	
-    	short min = (short) ((short)p.getValue()-rangeMutation);
-    	short max =  (short) ((short)p.getValue()-rangeMutation);
-
+        short val = (short) p.getValue();
+        short min = (short) (val - mutationRange);
+        short max = (short) (val + mutationRange);
         return (short) (min + (Math.random() * (max - min)));
     }
 
     @Override
     protected byte genByte(Parameter p) {
-    	
-    	byte min = (byte) ((byte) p.getValue()-rangeMutation);
-    	byte max =  (byte) ((byte)p.getValue()-rangeMutation);
-
+        byte val = (byte) p.getValue();
+        byte min = (byte) (val - mutationRange);
+        byte max = (byte) (val + mutationRange);
         return (byte) (min + (Math.random() * (max - min)));
-     
+
     }
 
     @Override
     protected boolean genBoolean(Parameter p) {
-        return !(Boolean) p.getValue();
+        return !((boolean) p.getValue());
     }
 
     @Override
     protected String genString(Parameter p) {
-        StringBuilder str = new StringBuilder((String)p.getValue());
-        int nbMutations = str.length()/2;
+        String val = (String) p.getValue();
+        StringBuilder str = new StringBuilder(val);
+        int nbMutations = str.length() / 2; // this is too arbitrary
         while (nbMutations > 0) {
-        	int pos= (int) (Math.random() * str.length() );
-            str.setCharAt(pos, CHARACTERS.charAt((int) (Math.random() * CHARACTERS.length())));
+            int pos = (int) (Math.random() * str.length());
+            str.setCharAt(pos, super.genCharacter(null));
             nbMutations--;
         }
         return str.toString();
+    }
+
+    public void setMutationRange(int range) {
+        this.mutationRange = range;
+    }
+
+    public static void main(String[] args) {
+        Parameter p = new Parameter();
+        p.setName("foo");
+        p.setType("java.lang.String");
+        p.setValue("Lorem ipsum dolor sit amet");
+        RandomMutationGenerator gen = new RandomMutationGenerator();
+        for (int i=0; i < 10; i++) {
+            System.out.println(gen.genString(p));
+        }
     }
 }
