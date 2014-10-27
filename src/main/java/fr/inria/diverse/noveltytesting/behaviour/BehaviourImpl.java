@@ -1,7 +1,5 @@
 package fr.inria.diverse.noveltytesting.behaviour;
 
-import java.util.Vector;
-
 import fr.inria.diverse.noveltytesting.model.Parameter;
 import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Method;
