@@ -14,12 +14,14 @@ public class SelectionOperator implements Operator {
     @Override
     public void process(Population population) {
     	int noveltyThreshold= 100; // should be in the common list parameters 
+    	
         List<Interface> interfaces = population.getInterfaces();
 
         interfaces.stream()
-                .filter(anInterface -> anInterface.getFitness() > 1 || anInterface.getBehaviour().getNoveltyMetric()<100)
-                .forEach(population::removeInterface);
-        
+        .filter(anInterface -> anInterface.getBehaviour().getNoveltyMetric()<100)
+        .forEach(population::removeInterface);
+
+        NoveltyEngineImpl.relevantInterfaces.addInterfaces(population.getRelevantModels());
         NoveltyEngineImpl.Archive.addInterfaces(interfaces);
     }
 }
