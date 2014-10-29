@@ -14,7 +14,9 @@ public class InputOutputVisitor extends AbstractModelVisitor {
 
     @Override
     public void visit(Interface i) {
-        System.out.println("Model: " + i.getName());
+        System.out.println("\n\n\nModel: " + i.getName());
+        System.out.println("Novelty Metric: " + i.getBehaviour().getNoveltyMetric());
+        System.out.println("Fitness Value: " + i.getFitness());
     }
 
     @Override
@@ -53,7 +55,6 @@ public class InputOutputVisitor extends AbstractModelVisitor {
             str.append(")");
         }
 
-        str.append("\n============================");
         System.out.println(str.toString());
     }
 
