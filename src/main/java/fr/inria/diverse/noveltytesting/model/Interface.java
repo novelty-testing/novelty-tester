@@ -21,7 +21,7 @@ public class Interface implements Visitable {
 	}
 
 	public void setBehaviour(Behaviour b) {
-		this.behaviour = behaviour;
+		this.behaviour = b;
 	}
 
 	public Interface() {
