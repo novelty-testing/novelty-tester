@@ -26,9 +26,14 @@ public class BehaviourImpl implements Behaviour {
 	@Override
 	public void setNoveltyMetric(Interface anInterface, Population population,
 			Population archive) {
+		if (archive==null){
+			this.noveltyMetric = getDistFromPopulation(anInterface, population);
+		
+		}else {
+			this.noveltyMetric = getDistFromPopulation(anInterface, population)
+					+ getDistFromArchive(anInterface, archive);
+		}
 
-		noveltyMetric = getDistFromPopulation(anInterface, population)
-				+ getDistFromArchive(anInterface, archive);
 	}
 
 	public double getDistFromArchive(Interface anInterface, Population Archive) {
@@ -88,16 +93,16 @@ public class BehaviourImpl implements Behaviour {
 
 		double distanceParameters;
 
-		if (parameter1.equals("int") || parameter1.equals("float")
-				|| parameter1.equals("long") || parameter1.equals("double")
-				|| parameter1.equals("byte") || parameter1.equals("short")) {
+		if (parameter1.getType().equals("int") || parameter1.getType().equals("float")
+				|| parameter1.getType().equals("long") || parameter1.getType().equals("double")
+				|| parameter1.getType().equals("byte") || parameter1.getType().equals("short")) {
 			distanceNumbers = distanceNumbers(parameter1.getValue(),
 					parameter2.getValue());
-		} else if (parameter1.equals("char")) {
+		} else if (parameter1.getType().equals("char")) {
 
 			distanceChar = distanceChar(parameter1.getValue(),
 					parameter2.getValue());
-		} else if (parameter1.equals("java.lang.String")) {
+		} else if (parameter1.getType().equals("java.lang.String")) {
 
 			distanceStrings = distanceStrings(parameter1.getValue(),
 					parameter2.getValue());
@@ -127,18 +132,18 @@ public class BehaviourImpl implements Behaviour {
 				costs[j] = cj;
 			}
 		}
-		return costs[b1.length()];
+		return Math.abs(costs[b1.length()]);
 	}
 
 	public int distanceChar(Object a, Object b) {
 		char a1 = a.toString().charAt(0);
 		char b1 = b.toString().charAt(0);
-        return Character.toLowerCase(a1) - Character.toLowerCase(b1);
+        return Math.abs(Character.toLowerCase(a1) - Character.toLowerCase(b1));
 	}
 
 	public double distanceNumbers(Object a, Object b) {
 
-        return Double.parseDouble(a.toString()) - Double.parseDouble(b.toString());
+        return Math.abs(Double.parseDouble(a.toString()) - Double.parseDouble(b.toString()));
 	}
 
 }

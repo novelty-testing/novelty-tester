@@ -12,5 +12,4 @@ public interface Behaviour {
 	void setNoveltyMetric(Interface anInterface, Population population, Population archive);
 	double getNoveltyMetric();
 
-
 }
