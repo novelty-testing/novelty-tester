@@ -46,7 +46,7 @@ public class NoveltyGenerationTest {
 			for(Interface in:population.getInterfaces()){
 				Visitor visitor = new InputOutputVisitor();
 				in.accept(visitor);
-				}
+			}
 		}
 		
 	}
