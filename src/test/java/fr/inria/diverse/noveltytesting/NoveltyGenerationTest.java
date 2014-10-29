@@ -1,8 +1,11 @@
 package fr.inria.diverse.noveltytesting;
 
+import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Population;
 import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngine;
 import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngineImpl;
+import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
+import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,15 +34,19 @@ public class NoveltyGenerationTest {
 		
 		//first population
 		Population population = engine.generateInitialPopulation();
-		
+
 		//next populations
 		for (int i = 0; i < numberGenerations; i++) {
-			
+
 			engine.executeMethods(population);
 			engine.EvaluateSolutions(population);
 			engine.ApplyGeneticOperators(population);
 			engine.generateNextPopulation(population);
-
+		}
+		
+		for(Interface i:population.getInterfaces()){
+		Visitor visitor = new InputOutputVisitor();
+		i.accept(visitor);
 		}
 	}
 }
