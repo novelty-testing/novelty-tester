@@ -13,7 +13,7 @@ public class Selection implements Operator {
 
 	@Override
 	public void process(Population population) {
-		int noveltyThreshold = 100; // should be in the common list parameters
+		int noveltyThreshold = 5; // should be in the common list parameters
 
 		List<Interface> interfaces = population.getInterfaces();
 

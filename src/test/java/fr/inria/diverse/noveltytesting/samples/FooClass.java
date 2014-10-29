@@ -6,7 +6,7 @@ package fr.inria.diverse.noveltytesting.samples;
 public class FooClass {
 
     public void print(int val) {
-        System.out.println("Output: "+val);
+        //System.out.println("Output: "+val);
     }
 
     public boolean isPositive(double a) {
