@@ -31,9 +31,7 @@ public class NoveltyGenerationTest {
 		
 		//first population
 		Population population = engine.generateInitialPopulation();
-		engine.executeMethods(population);
-		engine.EvaluateSolutions(population);
-
+		
 		//next populations
 		for (int i = 0; i < numberGenerations; i++) {
 			
