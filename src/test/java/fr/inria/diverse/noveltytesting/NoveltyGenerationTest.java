@@ -34,7 +34,7 @@ public class NoveltyGenerationTest {
 		
 		//first population
 		Population population = engine.generateInitialPopulation();
-
+		
 		//next populations
 		for (int i = 0; i < numberGenerations; i++) {
 
@@ -42,11 +42,12 @@ public class NoveltyGenerationTest {
 			engine.EvaluateSolutions(population);
 			engine.ApplyGeneticOperators(population);
 			engine.generateNextPopulation(population);
+			
+			for(Interface in:population.getInterfaces()){
+				Visitor visitor = new InputOutputVisitor();
+				in.accept(visitor);
+				}
 		}
 		
-		for(Interface i:population.getInterfaces()){
-		Visitor visitor = new InputOutputVisitor();
-		i.accept(visitor);
-		}
 	}
 }
