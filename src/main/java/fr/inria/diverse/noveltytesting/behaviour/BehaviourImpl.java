@@ -83,6 +83,7 @@ public class BehaviourImpl implements Behaviour {
 					method2.getParamsMap().get(p.getName()));
 			distanceMethods += dist;
 		}
+		
 		return distanceMethods;
 	}
 

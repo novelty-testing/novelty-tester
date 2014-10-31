@@ -23,9 +23,9 @@ public class NoveltyGenerationTest {
 	@Before
 	public void testBefore() {
 		this.clazz = "fr.inria.diverse.noveltytesting.samples.FooClass";
-		this.popSize = 100;
+		this.popSize = 2;
 		this.archiveSize = 1000;
-		this.numberGenerations = 10;
+		this.numberGenerations = 2;
 	}
 
 	@Test
@@ -34,19 +34,17 @@ public class NoveltyGenerationTest {
 		
 		//first population
 		Population population = engine.generateInitialPopulation();
-		
+
 		//next populations
 		for (int i = 0; i < numberGenerations; i++) {
 
 			engine.executeMethods(population);
 			engine.EvaluateSolutions(population);
+			engine.displayPopulation(population);
 			engine.ApplyGeneticOperators(population);
 			engine.generateNextPopulation(population);
 			
-			for(Interface in:population.getInterfaces()){
-				Visitor visitor = new InputOutputVisitor();
-				in.accept(visitor);
-			}
+
 		}
 		
 	}

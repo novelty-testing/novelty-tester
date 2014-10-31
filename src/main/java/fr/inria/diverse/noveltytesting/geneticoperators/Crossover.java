@@ -22,7 +22,7 @@ public class Crossover implements Operator {
 
 				crossoverMethodPosition = (int) (Math.random() * interfaces.get(i).getMethods().size());
 				crossoverPoint = (int) (Math.random() * interfaces.get(i).getMethods().get(crossoverMethodPosition).getParameters().size());
-
+				
 				permute = interfaces.get(i).getMethods().get(crossoverMethodPosition).getParameters().get(crossoverPoint).getValue();
 				
 				interfaces

@@ -13,7 +13,7 @@ public class RandomGenerator extends AbstractGenerator {
             "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
             "0123456789" +
             "&é\"'(-è_çà)=ù*^,;:!?./§~#{[|`\\^@]}]+*²<>%µ£¨";
-
+    
     @Override
     protected int genInteger(Parameter p) {
         return new Random().nextInt();
@@ -26,7 +26,9 @@ public class RandomGenerator extends AbstractGenerator {
 
     @Override
     protected double genDouble(Parameter p) {
-        return new Random().nextDouble();
+    	double min = Double.MIN_VALUE;
+    	double max = Double.MAX_VALUE;
+        return min + (new Random().nextDouble() * (max - min));
     }
 
     @Override
@@ -58,7 +60,7 @@ public class RandomGenerator extends AbstractGenerator {
 
     @Override
     protected String genString(Parameter p) {
-        int strLength = new Random().nextInt(100) + 1; // this is really arbitrary
+        int strLength = new Random().nextInt(10) + 1; // this is really arbitrary
         StringBuilder str = new StringBuilder();
         while (strLength > 0) {
             str.append(genCharacter(p));

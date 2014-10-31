@@ -9,6 +9,8 @@ import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Population;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGeneration;
 import fr.inria.diverse.noveltytesting.modelgeneration.ModelGenerationImpl;
+import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
+import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -78,7 +80,6 @@ public class NoveltyEngineImpl implements NoveltyEngine {
 	public void executeMethods(Population population) throws NoSuchMethodException, InstantiationException,
 			IllegalAccessException, InvocationTargetException {
 
-		ModelGeneration gen = new ModelGenerationImpl();
 		for (Interface i : population.getInterfaces()) {
 			gen.executeMethods(i);
 		}
@@ -106,6 +107,14 @@ public class NoveltyEngineImpl implements NoveltyEngine {
 		}
 		newInterfaces.forEach(gen::generateData);
 		population.addInterfaces(newInterfaces);
+	}
+
+	@Override
+	public void displayPopulation(Population population) {
+		for(Interface in:population.getInterfaces()){
+			Visitor visitor = new InputOutputVisitor();
+			in.accept(visitor);
+		}
 	}
 
 }

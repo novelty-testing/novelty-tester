@@ -35,7 +35,7 @@ public class RandomMutationGenerator extends RandomGenerator {
         double val = (double) p.getValue();
         double min = val - mutationRange;
         double max = val + mutationRange;
-        return min + new Random().nextFloat() * (max - min);
+        return min + (new Random().nextDouble() * (max - min));
     }
 
     @Override
