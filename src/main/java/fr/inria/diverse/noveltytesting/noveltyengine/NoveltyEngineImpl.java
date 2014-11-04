@@ -17,6 +17,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Includes basic processes for the execution of the novelty algorithm mainly :
+ * 
+ * generateInitialPopulation : generate models + data
+ * 
+ * executeMethods : execute models + update outputs
+ * 
+ * evaluateSolutions : set the novelty metric
+ * 
+ * displayPopulation : display on console
+ * 
+ * applyGeneticOperators : apply selection, mutation and crossover on current
+ * population
+ * 
+ * generateNextPopulation : generate new interfaces in order to fulfill the
+ * current population after having remove non-novel interfaces
+ * 
+ * 
  * @author leiko
  *
  */
@@ -46,7 +63,8 @@ public class NoveltyEngineImpl implements NoveltyEngine {
 	 */
 	public static Population relevantInterfaces;
 
-	public NoveltyEngineImpl(String classFqn, int popSize, int archiveSize) throws ClassNotFoundException {
+	public NoveltyEngineImpl(String classFqn, int popSize, int archiveSize)
+			throws ClassNotFoundException {
 
 		this.clazz = Class.forName(classFqn);
 		this.popSize = popSize;
@@ -77,7 +95,8 @@ public class NoveltyEngineImpl implements NoveltyEngine {
 	}
 
 	@Override
-	public void executeMethods(Population population) throws NoSuchMethodException, InstantiationException,
+	public void executeMethods(Population population)
+			throws NoSuchMethodException, InstantiationException,
 			IllegalAccessException, InvocationTargetException {
 
 		for (Interface i : population.getInterfaces()) {
@@ -86,14 +105,14 @@ public class NoveltyEngineImpl implements NoveltyEngine {
 	}
 
 	@Override
-	public void ApplyGeneticOperators(Population population) {
+	public void applyGeneticOperators(Population population) {
 		selection.process(population);
 		mutation.process(population);
 		crossover.process(population);
 	}
 
 	@Override
-	public void EvaluateSolutions(Population population) {
+	public void evaluateSolutions(Population population) {
 		evaluation.process(population);
 
 	}
@@ -111,7 +130,7 @@ public class NoveltyEngineImpl implements NoveltyEngine {
 
 	@Override
 	public void displayPopulation(Population population) {
-		for(Interface in:population.getInterfaces()){
+		for (Interface in : population.getInterfaces()) {
 			Visitor visitor = new InputOutputVisitor();
 			in.accept(visitor);
 		}

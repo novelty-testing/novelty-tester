@@ -16,9 +16,9 @@ public interface NoveltyEngine {
 
 	void generateNextPopulation(Population population);
 
-	void ApplyGeneticOperators(Population population);
+	void applyGeneticOperators(Population population);
 
-	void EvaluateSolutions(Population population);
+	void evaluateSolutions(Population population);
 	
 	void displayPopulation(Population population);
 }

@@ -11,6 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * each client instantiates the engine by giving as a parameter the services'
+ * interface, the pop and the archive size and then apply the different services
+ * of the novelty algorithm
+ * 
  * Unit test
  */
 public class NoveltyGenerationTest {
@@ -30,22 +34,22 @@ public class NoveltyGenerationTest {
 
 	@Test
 	public void testTestClass() throws Exception {
-		NoveltyEngine engine = new NoveltyEngineImpl(clazz, popSize, archiveSize);
-		
-		//first population
+		NoveltyEngine engine = new NoveltyEngineImpl(clazz, popSize,
+				archiveSize);
+
+		// first population
 		Population population = engine.generateInitialPopulation();
 
-		//next populations
+		// next populations
 		for (int i = 0; i < numberGenerations; i++) {
 
 			engine.executeMethods(population);
-			engine.EvaluateSolutions(population);
+			engine.evaluateSolutions(population);
 			engine.displayPopulation(population);
-			engine.ApplyGeneticOperators(population);
+			engine.applyGeneticOperators(population);
 			engine.generateNextPopulation(population);
-			
 
 		}
-		
+
 	}
 }

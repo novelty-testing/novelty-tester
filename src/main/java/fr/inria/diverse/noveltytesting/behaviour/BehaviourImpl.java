@@ -5,8 +5,11 @@ import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Method;
 import fr.inria.diverse.noveltytesting.model.Population;
 
-
 /**
+ * this class basically measures the distance between a given interface and a
+ * population and an archive of past visited interfaces. This distance is called
+ * the novelty metric
+ * 
  * Created by leiko on 16/10/14.
  */
 
@@ -26,10 +29,10 @@ public class BehaviourImpl implements Behaviour {
 	@Override
 	public void setNoveltyMetric(Interface anInterface, Population population,
 			Population archive) {
-		if (archive==null){
+		if (archive == null) {
 			this.noveltyMetric = getDistFromPopulation(anInterface, population);
-		
-		}else {
+
+		} else {
 			this.noveltyMetric = getDistFromPopulation(anInterface, population)
 					+ getDistFromArchive(anInterface, archive);
 		}
@@ -47,7 +50,8 @@ public class BehaviourImpl implements Behaviour {
 		return distFromArchive;
 	}
 
-	public double getDistFromPopulation(Interface anInterface, Population population) {
+	public double getDistFromPopulation(Interface anInterface,
+			Population population) {
 		double distFromPopulation = 0;
 		double dist;
 		for (Interface i : population.getInterfaces()) {
@@ -83,7 +87,7 @@ public class BehaviourImpl implements Behaviour {
 					method2.getParamsMap().get(p.getName()));
 			distanceMethods += dist;
 		}
-		
+
 		return distanceMethods;
 	}
 
@@ -94,9 +98,12 @@ public class BehaviourImpl implements Behaviour {
 
 		double distanceParameters;
 
-		if (parameter1.getType().equals("int") || parameter1.getType().equals("float")
-				|| parameter1.getType().equals("long") || parameter1.getType().equals("double")
-				|| parameter1.getType().equals("byte") || parameter1.getType().equals("short")) {
+		if (parameter1.getType().equals("int")
+				|| parameter1.getType().equals("float")
+				|| parameter1.getType().equals("long")
+				|| parameter1.getType().equals("double")
+				|| parameter1.getType().equals("byte")
+				|| parameter1.getType().equals("short")) {
 			distanceNumbers = distanceNumbers(parameter1.getValue(),
 					parameter2.getValue());
 		} else if (parameter1.getType().equals("char")) {
@@ -139,15 +146,13 @@ public class BehaviourImpl implements Behaviour {
 	public int distanceChar(Object a, Object b) {
 		char a1 = a.toString().charAt(0);
 		char b1 = b.toString().charAt(0);
-        return Math.abs(Character.toLowerCase(a1) - Character.toLowerCase(b1));
+		return Math.abs(Character.toLowerCase(a1) - Character.toLowerCase(b1));
 	}
 
 	public double distanceNumbers(Object a, Object b) {
 
-        return Math.abs(Double.parseDouble(a.toString()) - Double.parseDouble(b.toString()));
+		return Math.abs(Double.parseDouble(a.toString())
+				- Double.parseDouble(b.toString()));
 	}
 
 }
-
-
-

@@ -4,6 +4,8 @@ import fr.inria.diverse.noveltytesting.visitor.Visitable;
 import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
 /**
+ * a parameter of a method has a name, a type and a value
+ * 
  * Created by leiko on 16/10/14.
  */
 public class Parameter implements Visitable {

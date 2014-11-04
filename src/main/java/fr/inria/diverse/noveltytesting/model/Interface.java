@@ -7,7 +7,12 @@ import fr.inria.diverse.noveltytesting.visitor.Visitor;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
+/** 
+ * an interface belongs to only one services'interface
+ * an interface holds a list of services
+ * an interface has a fitness value (1st metric): 1 if the outputs are similar <1 if there is any incoherence
+ * an interface has a behaviour (2nd metric) which handles the novelty metric
+ * 
  * Created by leiko on 16/10/14.
  */
 public class Interface implements Visitable {

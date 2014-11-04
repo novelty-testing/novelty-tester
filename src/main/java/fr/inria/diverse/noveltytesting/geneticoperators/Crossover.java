@@ -6,8 +6,17 @@ import fr.inria.diverse.noveltytesting.model.Population;
 import java.util.List;
 
 /**
+ * 
+ * the crossover process edits interfaces by exchanging data between
+ * selected solutions 
+ * 
+ * crossover occurs generally between two parent individuals
+ * by exchanging their data at random positions in order to generate two
+ * offsprings
+ * 
  * Created by leiko on 24/10/14.
  */
+
 public class Crossover implements Operator {
 
 	@Override
@@ -22,9 +31,9 @@ public class Crossover implements Operator {
 
 				crossoverMethodPosition = (int) (Math.random() * interfaces.get(i).getMethods().size());
 				crossoverPoint = (int) (Math.random() * interfaces.get(i).getMethods().get(crossoverMethodPosition).getParameters().size());
-				
+
 				permute = interfaces.get(i).getMethods().get(crossoverMethodPosition).getParameters().get(crossoverPoint).getValue();
-				
+
 				interfaces
 						.get(i)
 						.getMethods()
@@ -36,7 +45,7 @@ public class Crossover implements Operator {
 										.get(crossoverMethodPosition)
 										.getParameters().get(crossoverPoint)
 										.getValue());
-				
+
 				interfaces.get(i + 1).getMethods().get(crossoverMethodPosition).getParameters().get(crossoverPoint).setValue(permute);
 			}
 
