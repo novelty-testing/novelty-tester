@@ -1,12 +1,11 @@
 package fr.inria.diverse.noveltytesting;
 
-import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Population;
 import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngine;
 import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngineImpl;
+
 import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
 import fr.inria.diverse.noveltytesting.visitor.Visitor;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,35 +16,31 @@ public class NoveltyGenerationTest {
 
 	private String clazz;
 	private int popSize;
-	private int archiveSize;
 	private int numberGenerations;
 
 	@Before
 	public void testBefore() {
-		this.clazz = "fr.inria.diverse.noveltytesting.samples.FooClass";
+		this.clazz = "fr.inria.diverse.noveltytesting.samples.FunctionsImpl";
 		this.popSize = 2;
-		this.archiveSize = 1000;
 		this.numberGenerations = 2;
 	}
 
 	@Test
 	public void testTestClass() throws Exception {
-		NoveltyEngine engine = new NoveltyEngineImpl(clazz, popSize, archiveSize);
-		
-		//first population
-		Population population = engine.generateInitialPopulation();
+		NoveltyEngine engine = new NoveltyEngineImpl();
+        engine.setExclusionPattern("__hx_");
+        Population pop = engine.generatePopulation(this.clazz, this.popSize);
+        engine.generateData(pop);
 
-		//next populations
-		for (int i = 0; i < numberGenerations; i++) {
+        Visitor visitor = new InputOutputVisitor();
+        for (int i=0; i < this.numberGenerations; i++) {
+            engine.executeMethods(pop);
+            pop.accept(visitor);
+            engine.evaluate(pop);
+            engine.geneticProcess(pop);
+            pop.accept(visitor);
+            engine.generateData(pop);
+        }
 
-			engine.executeMethods(population);
-			engine.EvaluateSolutions(population);
-			engine.displayPopulation(population);
-			engine.ApplyGeneticOperators(population);
-			engine.generateNextPopulation(population);
-			
-
-		}
-		
 	}
 }

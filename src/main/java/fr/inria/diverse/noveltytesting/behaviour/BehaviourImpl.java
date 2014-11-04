@@ -12,82 +12,41 @@ import fr.inria.diverse.noveltytesting.model.Population;
 
 public class BehaviourImpl implements Behaviour {
 
-	double noveltyMetric;
+    public double getDistance(Interface i, Population pop, Population archive) {
+        return getDistance(i, pop) + getDistance(i, archive);
+    }
 
-	public BehaviourImpl() {
-		// TODO
-	}
-
-	@Override
-	public double getNoveltyMetric() {
-		return noveltyMetric;
-	}
-
-	@Override
-	public void setNoveltyMetric(Interface anInterface, Population population,
-			Population archive) {
-		if (archive==null){
-			this.noveltyMetric = getDistFromPopulation(anInterface, population);
-		
-		}else {
-			this.noveltyMetric = getDistFromPopulation(anInterface, population)
-					+ getDistFromArchive(anInterface, archive);
-		}
-
-	}
-
-	public double getDistFromArchive(Interface anInterface, Population Archive) {
-		double distFromArchive = 0;
-		double dist;
-		for (Interface i : Archive.getInterfaces()) {
-			dist = distanceInterfaces(anInterface, i);
-			distFromArchive += dist;
-		}
-
-		return distFromArchive;
-	}
-
-	public double getDistFromPopulation(Interface anInterface, Population population) {
+    private double getDistance(Interface anInterface, Population population) {
 		double distFromPopulation = 0;
-		double dist;
 		for (Interface i : population.getInterfaces()) {
-			dist = distanceInterfaces(anInterface, i);
-			distFromPopulation += dist;
+			distFromPopulation += getDistance(anInterface, i);
 		}
-
 		return distFromPopulation;
 
 	}
 
-	public double distanceInterfaces(Interface interface1, Interface interface2) {
+    private double getDistance(Interface interface1, Interface interface2) {
 		double distanceInterfaces = 0;
-		double dist;
-
 		for (Method m : interface1.getMethods()) {
-			dist = distanceMethods(
-					interface1.getMethod(m.getName(), m.getParameterTypes()),
-					interface2.getMethod(m.getName(), m.getParameterTypes()));
-			distanceInterfaces += dist;
+			distanceInterfaces += getDistance(
+                    interface1.getMethod(m.getName(), m.getParameterTypes()),
+                    interface2.getMethod(m.getName(), m.getParameterTypes()));
 		}
 
 		return distanceInterfaces;
 	}
 
-	public double distanceMethods(Method method1, Method method2) {
-
+    private double getDistance(Method method1, Method method2) {
 		double distanceMethods = 0;
-		double dist;
-
 		for (Parameter p : method1.getParameters()) {
-			dist = distanceParameters(method1.getParamsMap().get(p.getName()),
-					method2.getParamsMap().get(p.getName()));
-			distanceMethods += dist;
+			distanceMethods += getDistance(method1.getParamsMap().get(p.getName()),
+                    method2.getParamsMap().get(p.getName()));
 		}
 		
 		return distanceMethods;
 	}
 
-	public double distanceParameters(Parameter parameter1, Parameter parameter2) {
+    private double getDistance(Parameter parameter1, Parameter parameter2) {
 		double distanceNumbers = 0;
 		double distanceChar = 0;
 		double distanceStrings = 0;
@@ -97,16 +56,13 @@ public class BehaviourImpl implements Behaviour {
 		if (parameter1.getType().equals("int") || parameter1.getType().equals("float")
 				|| parameter1.getType().equals("long") || parameter1.getType().equals("double")
 				|| parameter1.getType().equals("byte") || parameter1.getType().equals("short")) {
-			distanceNumbers = distanceNumbers(parameter1.getValue(),
-					parameter2.getValue());
+			distanceNumbers = getDistance((Number) parameter1.getValue(), (Number) parameter2.getValue());
+
 		} else if (parameter1.getType().equals("char")) {
+			distanceChar = getDistance((char) parameter1.getValue(), (char) parameter2.getValue());
 
-			distanceChar = distanceChar(parameter1.getValue(),
-					parameter2.getValue());
 		} else if (parameter1.getType().equals("java.lang.String")) {
-
-			distanceStrings = distanceStrings(parameter1.getValue(),
-					parameter2.getValue());
+			distanceStrings = getDistance((String) parameter1.getValue(), (String) parameter2.getValue());
 		}
 
 		distanceParameters = distanceNumbers + distanceChar + distanceStrings;
@@ -114,10 +70,9 @@ public class BehaviourImpl implements Behaviour {
 		return distanceParameters;
 	}
 
-	public int distanceStrings(Object a, Object b) {
-
-		String a1 = a.toString().toLowerCase();
-		String b1 = b.toString().toLowerCase();
+    private int getDistance(String a, String b) {
+		String a1 = a.toLowerCase();
+		String b1 = b.toLowerCase();
 
 		int[] costs = new int[b1.length() + 1];
 		for (int j = 0; j < costs.length; j++)
@@ -136,17 +91,13 @@ public class BehaviourImpl implements Behaviour {
 		return Math.abs(costs[b1.length()]);
 	}
 
-	public int distanceChar(Object a, Object b) {
-		char a1 = a.toString().charAt(0);
-		char b1 = b.toString().charAt(0);
-        return Math.abs(Character.toLowerCase(a1) - Character.toLowerCase(b1));
+    private int getDistance(char a, char b) {
+        return Math.abs(Character.toLowerCase(a) - Character.toLowerCase(b));
 	}
 
-	public double distanceNumbers(Object a, Object b) {
-
-        return Math.abs(Double.parseDouble(a.toString()) - Double.parseDouble(b.toString()));
+    private double getDistance(Number a, Number b) {
+        return Math.abs(a.doubleValue() - b.doubleValue());
 	}
-
 }
 
 

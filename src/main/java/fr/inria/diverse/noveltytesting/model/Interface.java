@@ -1,6 +1,7 @@
 package fr.inria.diverse.noveltytesting.model;
 
 import fr.inria.diverse.noveltytesting.behaviour.Behaviour;
+import fr.inria.diverse.noveltytesting.behaviour.BehaviourImpl;
 import fr.inria.diverse.noveltytesting.visitor.Visitable;
 import fr.inria.diverse.noveltytesting.visitor.Visitor;
 
@@ -14,15 +15,7 @@ public class Interface implements Visitable {
 
     private String name;
     private List<Method> methods;
-    private Behaviour behaviour;
-
-    public Behaviour getBehaviour() {
-		return behaviour;
-	}
-
-	public void setBehaviour(Behaviour b) {
-		this.behaviour = b;
-	}
+    private double noveltyMetric;
 
 	public Interface() {
         this.methods = new LinkedList<>();
@@ -44,6 +37,10 @@ public class Interface implements Visitable {
         }
 
         return null;
+    }
+
+    public double getNoveltyMetric() {
+        return noveltyMetric;
     }
 
     public void addMethod(Method m) {
@@ -100,5 +97,10 @@ public class Interface implements Visitable {
         } else {
             return 1.0f;
         }
+    }
+
+    public void processNoveltyMetric(Population current, Population archive) {
+        Behaviour b = new BehaviourImpl();
+        noveltyMetric = b.getDistance(this, current, archive);
     }
 }

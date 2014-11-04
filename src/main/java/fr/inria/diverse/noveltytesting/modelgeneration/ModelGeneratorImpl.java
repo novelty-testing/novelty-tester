@@ -8,15 +8,20 @@ import fr.inria.diverse.noveltytesting.model.Parameter;
 import fr.inria.diverse.noveltytesting.runner.Runner;
 import fr.inria.diverse.noveltytesting.runner.RunnerImpl;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
  * Created by leiko on 16/10/14.
  */
-public class ModelGenerationImpl implements ModelGeneration {
+public class ModelGeneratorImpl implements ModelGenerator {
 
     private Generator generator = new RandomGenerator();
     private Runner runner = new RunnerImpl();
+    private String exclusionPattern;
 
 
     @Override
@@ -25,11 +30,27 @@ public class ModelGenerationImpl implements ModelGeneration {
     }
 
     @Override
+    public void setExclusionPattern(String pattern) {
+        this.exclusionPattern = pattern;
+    }
+
+    @Override
     public Interface generateModel(Class<?> clazz) {
         Interface i = new Interface();
         i.setName(clazz.getName());
 
+        List<java.lang.reflect.Method> methods = new ArrayList<>();
         for (java.lang.reflect.Method m : clazz.getDeclaredMethods()) {
+            if (exclusionPattern == null) {
+                methods.add(m);
+            } else {
+                if (!m.getName().startsWith(exclusionPattern)) {
+                    methods.add(m);
+                }
+            }
+        }
+
+        for (java.lang.reflect.Method m : methods) {
             Method method = new Method();
             method.setName(m.getName());
             method.setReturnValType(m.getReturnType().getTypeName());

@@ -1,27 +1,32 @@
 package fr.inria.diverse.noveltytesting.geneticoperators;
 
-import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Population;
-import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngineImpl;
-
-import java.util.List;
 
 /**
  * Created by leiko on 24/10/14.
  */
 public class Selection implements Operator {
 
+    private double threshold;
+    private Population archive;
+
+    public Selection(Population archive) {
+        this.threshold = 0;
+        this.archive = archive;
+    }
+
+    public void setThreshold(double d) {
+        this.threshold = d;
+    }
+
 	@Override
 	public void process(Population population) {
-		int noveltyThreshold = 0; // should be in the common list parameters
+        population.getInterfaces().forEach(i -> {
+            if (i.getNoveltyMetric() < threshold) {
+                population.removeInterface(i);
+            }
+        });
 
-		List<Interface> interfaces = population.getInterfaces();
-
-		interfaces.stream()
-				  .filter(anInterface -> anInterface.getBehaviour().getNoveltyMetric() < noveltyThreshold)
-				  .forEach(population::removeInterface);
-
-		NoveltyEngineImpl.relevantInterfaces.addInterfaces(population.getRelevantModels());
-		NoveltyEngineImpl.Archive.addInterfaces(interfaces);
+        archive.addInterfaces(population.getInterfaces());
 	}
 }

@@ -1,9 +1,6 @@
 package fr.inria.diverse.noveltytesting.visitor;
 
-import fr.inria.diverse.noveltytesting.model.Interface;
-import fr.inria.diverse.noveltytesting.model.Method;
-import fr.inria.diverse.noveltytesting.model.MethodOutput;
-import fr.inria.diverse.noveltytesting.model.Parameter;
+import fr.inria.diverse.noveltytesting.model.*;
 
 import java.util.Map;
 
@@ -13,13 +10,15 @@ import java.util.Map;
 public class InputOutputVisitor extends AbstractModelVisitor {
 
     @Override
+    public void visit(Population p) {
+        System.out.println("=========== Population ===========");
+    }
+
+    @Override
     public void visit(Interface i) {
-        System.out.println("\n\n\nModel: " + i.getName());
-      
-            System.out.println("Novelty Metric: " + i.getBehaviour().getNoveltyMetric());
-            System.out.println("Fitness Value: " + i.getFitness());
-
-
+        System.out.println("Model: " + i.getName());
+        System.out.println("Novelty Metric: " + i.getNoveltyMetric());
+        System.out.println("Fitness Value: " + i.getFitness());
     }
 
     @Override
@@ -45,22 +44,22 @@ public class InputOutputVisitor extends AbstractModelVisitor {
             }
         }
         str.append("\n");
-		if (m.getMethodOutputs()!=null) {
-        str.append("outputs:\n");
+        if (m.getMethodOutputs()!=null) {
+            str.append("outputs:\n");
 
-        str.append("\t");
-        //str.append(m.getReturnVal());
+            str.append("\t");
+            //str.append(m.getReturnVal());
 
-        for (Map.Entry<String, MethodOutput> entry : m.getMethodOutputs().entrySet()) {
-            str.append(entry.getValue().getReturnVal());
-            str.append(" (");
-            str.append(entry.getKey());
-            str.append(")");
+            for (Map.Entry<String, MethodOutput> entry : m.getMethodOutputs().entrySet()) {
+                str.append(entry.getValue().getReturnVal());
+                str.append(" (");
+                str.append(entry.getKey());
+                str.append(")");
+            }
+
+            System.out.println(str.toString());
         }
-
-        System.out.println(str.toString());
-    }	
-	}
+    }
 
     @Override
     public void visit(Parameter p) {}

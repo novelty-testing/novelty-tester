@@ -26,9 +26,7 @@ public class RandomGenerator extends AbstractGenerator {
 
     @Override
     protected double genDouble(Parameter p) {
-    	double min = Double.MIN_VALUE;
-    	double max = Double.MAX_VALUE;
-        return min + (new Random().nextDouble() * (max - min));
+        return Double.MIN_VALUE + (new Random().nextDouble() * (Double.MAX_VALUE - Double.MIN_VALUE));
     }
 
     @Override

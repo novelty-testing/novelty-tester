@@ -9,7 +9,5 @@ import fr.inria.diverse.noveltytesting.model.Population;
 
 public interface Behaviour {
 
-	void setNoveltyMetric(Interface anInterface, Population population, Population archive);
-	double getNoveltyMetric();
-
+    double getDistance(Interface i, Population iPop, Population archive);
 }

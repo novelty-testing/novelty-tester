@@ -37,9 +37,6 @@ public class RunnerImpl implements Runner {
                     method.addMethodOutput("java", mo);
 
                 }
-            } else {
-                // TODO method not found in model (this is not normal)
-                throw new NoSuchMethodException(binMethod.getName() + "with " + paramTypes.toString());
             }
         }
     }

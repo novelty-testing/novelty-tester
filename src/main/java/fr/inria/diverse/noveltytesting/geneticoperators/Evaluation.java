@@ -1,26 +1,20 @@
 package fr.inria.diverse.noveltytesting.geneticoperators;
 
-import fr.inria.diverse.noveltytesting.behaviour.Behaviour;
-import fr.inria.diverse.noveltytesting.behaviour.BehaviourImpl;
-import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Population;
-import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngineImpl;
 
 /**
- * @author mboussaa
- *
+ * Created by leiko on 04/11/14.
  */
-
 public class Evaluation implements Operator {
-	Behaviour b = new BehaviourImpl();
 
-	@Override
-	public void process(Population population) {
+    private Population archive;
 
-		for (Interface i : population.getInterfaces()) {
-			b.setNoveltyMetric(i, population, NoveltyEngineImpl.Archive);
-			i.setBehaviour(b);
-		}
-	}
+    public Evaluation(Population archive) {
+        this.archive = archive;
+    }
 
+    @Override
+    public void process(Population population) {
+        population.getInterfaces().forEach(i -> i.processNoveltyMetric(population, archive));
+    }
 }
