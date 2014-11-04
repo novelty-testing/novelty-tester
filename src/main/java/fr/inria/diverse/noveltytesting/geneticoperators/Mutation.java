@@ -8,6 +8,10 @@ import fr.inria.diverse.noveltytesting.model.Population;
 import java.util.List;
 
 /**
+ * 
+ * the mutation process edits the selected interfaces by modifying randomly some input data
+ * this operator is applied for all selected solutions
+ * 
  * Created by leiko on 24/10/14.
  */
 public class Mutation implements Operator {

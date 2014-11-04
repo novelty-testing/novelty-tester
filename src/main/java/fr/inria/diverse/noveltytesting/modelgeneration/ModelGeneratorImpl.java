@@ -15,6 +15,10 @@ import java.util.Set;
 
 
 /**
+ * Generates a model for a given interface
+ * Generates data for a given interface
+ * Executes data on different target platforms
+ * 
  * Created by leiko on 16/10/14.
  */
 public class ModelGeneratorImpl implements ModelGenerator {

@@ -3,6 +3,12 @@ package fr.inria.diverse.noveltytesting.model;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * an output could be functional (return value) or non functional (execution time, cpu consumption or memory consumption) 
+ * 
+ * @author mboussaa
+ *
+ */
 public class MethodOutput {
 	private Object returnVal;
 

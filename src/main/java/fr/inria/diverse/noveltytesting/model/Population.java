@@ -8,8 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
+ * getRelevantModels() return The list of interfaces that have generated
+ * incoherence in the outputs taking into account the fitness value
+ * 
  * @author leiko
  *
  */
@@ -22,26 +24,25 @@ public class Population implements Visitable {
         this.interfaces = new ArrayList<>();
     }
 
+	public List<Interface> getRelevantModels() {
+		return this.interfaces.stream().filter(i -> i.getFitness() < 1)
+				.collect(Collectors.toCollection(LinkedList::new));
+	}
+
     public List<Interface> getInterfaces() {
-        return interfaces;
-    }
-
-    public void addInterfaces(List<Interface> interfaces) {
-        this.interfaces.addAll(interfaces);
-    }
-
-    public void addInterface(Interface i) {
-        this.interfaces.add(i);
-    }
-
-    public List<Interface> getRelevantModels() {
-        return this.interfaces.stream()
-                .filter(i -> i.getFitness() < 1)
-                .collect(Collectors.toCollection(LinkedList::new));
+        return this.interfaces;
     }
 
     public void removeInterface(Interface anInterface) {
         this.interfaces.remove(anInterface);
+    }
+
+    public void addInterface(Interface anInterface) {
+        this.interfaces.add(anInterface);
+    }
+
+    public void addInterfaces(List<Interface> interfaces) {
+        this.interfaces.addAll(interfaces);
     }
 
     @Override

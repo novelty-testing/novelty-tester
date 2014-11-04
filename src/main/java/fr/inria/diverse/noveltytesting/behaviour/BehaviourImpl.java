@@ -5,8 +5,11 @@ import fr.inria.diverse.noveltytesting.model.Interface;
 import fr.inria.diverse.noveltytesting.model.Method;
 import fr.inria.diverse.noveltytesting.model.Population;
 
-
 /**
+ * this class basically measures the distance between a given interface and a
+ * population and an archive of past visited interfaces. This distance is called
+ * the novelty metric
+ * 
  * Created by leiko on 16/10/14.
  */
 
@@ -42,7 +45,7 @@ public class BehaviourImpl implements Behaviour {
 			distanceMethods += getDistance(method1.getParamsMap().get(p.getName()),
                     method2.getParamsMap().get(p.getName()));
 		}
-		
+
 		return distanceMethods;
 	}
 
@@ -57,7 +60,6 @@ public class BehaviourImpl implements Behaviour {
 				|| parameter1.getType().equals("long") || parameter1.getType().equals("double")
 				|| parameter1.getType().equals("byte") || parameter1.getType().equals("short")) {
 			distanceNumbers = getDistance((Number) parameter1.getValue(), (Number) parameter2.getValue());
-
 		} else if (parameter1.getType().equals("char")) {
 			distanceChar = getDistance((char) parameter1.getValue(), (char) parameter2.getValue());
 
@@ -97,8 +99,6 @@ public class BehaviourImpl implements Behaviour {
 
     private double getDistance(Number a, Number b) {
         return Math.abs(a.doubleValue() - b.doubleValue());
+
 	}
 }
-
-
-

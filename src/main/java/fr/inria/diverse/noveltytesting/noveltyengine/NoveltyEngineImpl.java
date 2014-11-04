@@ -9,6 +9,23 @@ import fr.inria.diverse.noveltytesting.modelgeneration.ModelGeneratorImpl;
 import java.lang.reflect.InvocationTargetException;
 
 /**
+ * Includes basic processes for the execution of the novelty algorithm mainly :
+ * 
+ * generateInitialPopulation : generate models + data
+ * 
+ * executeMethods : execute models + update outputs
+ * 
+ * evaluateSolutions : set the novelty metric
+ * 
+ * displayPopulation : display on console
+ * 
+ * applyGeneticOperators : apply selection, mutation and crossover on current
+ * population
+ * 
+ * generateNextPopulation : generate new interfaces in order to fulfill the
+ * current population after having remove non-novel interfaces
+ * 
+ * 
  * @author leiko
  *
  */

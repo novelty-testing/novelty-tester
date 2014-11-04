@@ -10,6 +10,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * each client instantiates the engine by giving as a parameter the services'
+ * interface, the pop and the archive size and then apply the different services
+ * of the novelty algorithm
+ * 
  * Unit test
  */
 public class NoveltyGenerationTest {
@@ -41,6 +45,5 @@ public class NoveltyGenerationTest {
             pop.accept(visitor);
             engine.generateData(pop);
         }
-
 	}
 }

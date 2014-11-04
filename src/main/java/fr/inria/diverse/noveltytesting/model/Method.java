@@ -6,6 +6,12 @@ import fr.inria.diverse.noveltytesting.visitor.Visitor;
 import java.util.*;
 
 /**
+ * a method has a name, a return value type, a list of parameters and list of outputs from the different target platforms
+ * 
+ * we associate a list of outputs to each target platform 
+ * 
+ * getMethodFitness() : is a comparison metric that compares the different outputs 
+ * 
  * Created by leiko on 16/10/14.
  */
 public class Method implements Visitable {
