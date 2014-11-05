@@ -2,29 +2,41 @@ package fr.inria.diverse.noveltytesting.visitor;
 
 import fr.inria.diverse.noveltytesting.model.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 
 /**
- * Created by leiko on 17/10/14.
+ * Created by leiko on 05/11/14.
  */
-public class InputOutputVisitor extends AbstractModelVisitor {
+public class FileOutputVisitor extends AbstractModelVisitor {
+
+    private FileWriter writer;
 
     @Override
     public void visit(Population p) {
-        System.out.println("=========== Population ===========");
         for (Interface i : p.getInterfaces()) {
             i.accept(this);
-            System.out.println("\n\n");
         }
     }
 
     @Override
     public void visit(Interface i) {
-        System.out.println("Model: " + i.getName());
-        System.out.println("Novelty Metric: " + i.getNoveltyMetric());
-        System.out.println("Fitness Value: " + i.getFitness());
-        for (Method m : i.getMethods()) {
-            m.accept(this);
+        try {
+            File file = File.createTempFile(i.getName(), ".log");
+            writer = new FileWriter(file);
+            writer.write("Model: " + i.getName() + "\n");
+            writer.write("Novelty Metric: " + i.getNoveltyMetric() + "\n");
+            writer.write("Fitness Value: " + i.getFitness() + "\n");
+            for (Method m : i.getMethods()) {
+                m.accept(this);
+            }
+            writer.flush();
+            writer.close();
+            System.out.println("Interface logs: "+file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -64,7 +76,12 @@ public class InputOutputVisitor extends AbstractModelVisitor {
             }
 
         }
-        System.out.println(str.toString());
+
+        try {
+            writer.write(str.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

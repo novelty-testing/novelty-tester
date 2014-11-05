@@ -4,6 +4,7 @@ import fr.inria.diverse.noveltytesting.model.Population;
 import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngine;
 import fr.inria.diverse.noveltytesting.noveltyengine.NoveltyEngineImpl;
 
+import fr.inria.diverse.noveltytesting.visitor.FileOutputVisitor;
 import fr.inria.diverse.noveltytesting.visitor.InputOutputVisitor;
 import fr.inria.diverse.noveltytesting.visitor.Visitor;
 import org.junit.Before;
@@ -35,6 +36,7 @@ public class NoveltyGenerationTest {
         engine.setExclusionPattern("__hx_");
         Population pop = engine.generatePopulation(this.clazz, this.popSize);
         engine.generateData(pop);
+
 
         Visitor visitor = new InputOutputVisitor();
         for (int i=0; i < this.numberGenerations; i++) {

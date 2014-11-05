@@ -46,19 +46,7 @@ public class Population implements Visitable {
     }
 
     @Override
-    public void accept(Visitor visitor, boolean visitChildren, boolean isRecursive) {
-        visitor.visit(this);
-        if (visitChildren) {
-            if (isRecursive) {
-                interfaces.forEach(i -> i.accept(visitor, true, true));
-            } else {
-                interfaces.forEach(i -> i.accept(visitor, false, false));
-            }
-        }
-    }
-
-    @Override
     public void accept(Visitor visitor) {
-        this.accept(visitor, true, true);
+        visitor.visit(this);
     }
 }

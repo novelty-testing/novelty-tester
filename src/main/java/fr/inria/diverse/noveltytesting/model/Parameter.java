@@ -44,12 +44,7 @@ public class Parameter implements Visitable {
     }
 
     @Override
-    public void accept(Visitor visitor, boolean visitChildren, boolean isRecursive) {
-        visitor.visit(this);
-    }
-
-    @Override
     public void accept(Visitor visitor) {
-        this.accept(visitor, true, true);
+        visitor.visit(this);
     }
 }

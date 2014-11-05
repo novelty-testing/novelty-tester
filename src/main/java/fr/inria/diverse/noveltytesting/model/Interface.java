@@ -74,20 +74,8 @@ public class Interface implements Visitable {
     }
 
     @Override
-    public void accept(Visitor visitor, boolean visitChildren, boolean isRecursive) {
-        visitor.visit(this);
-        if (visitChildren) {
-            if (isRecursive) {
-                methods.forEach(m -> m.accept(visitor, true, true));
-            } else {
-                methods.forEach(m -> m.accept(visitor, false, false));
-            }
-        }
-    }
-
-    @Override
     public void accept(Visitor visitor) {
-        this.accept(visitor, true, true);
+        visitor.visit(this);
     }
 
     public float getFitness() {
