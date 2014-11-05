@@ -4,7 +4,7 @@
 
     <groupId>fr.inria.diverse.noveltytesting</groupId>
     <artifactId>novelty-tester</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>novelty-tester</name>
     <url>https://github.com/novelty-testing/novelty-tester</url>
